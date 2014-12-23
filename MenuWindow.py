@@ -3,6 +3,9 @@
 
 import wx
 import math
+import parts_calc
+import volume_calc
+import heat_transfer
 
 pi=3.14159265357
 
@@ -20,7 +23,21 @@ class mainframe(wx.Frame):
 
         panel=wx.Panel(self)
 
+        #驱动事件
+        self.Bind(wx.EVT_MENU,self.Onparts,id=5000)
+        self.Bind(wx.EVT_MENU,self.Onvolume,id=5001)
+        self.Bind(wx.EVT_MENU,self.Onheat,id=5002)
         self.Bind(wx.EVT_MENU,self.Exit,id=6000)
+
+    #函数部分
+    def Onparts(self,event):
+        parts_calc.PartsFrame().Show()
+
+    def Onvolume(self,event):
+        volume_calc.VolumeFrame().Show()
+
+    def Onheat(self,event):
+        heat_transfer.HeatTransferFrame().Show()
 
     def Exit(self,event):
         self.Close(True)
