@@ -6,20 +6,20 @@ from math import pi
 
 
 
-def fun1(Pc,Di,fi,cigama,deltae):###´Ë¹«Ê½ÓÃÀ´¼ÆËãÍ²ÌåÇ¿¶È
-#ÅĞ¶Ï¹«Ê½ÓÅÊ¤·¶Î§
+def fun1(Pc,Di,fi,cigama,deltae):###æ­¤å…¬å¼ç”¨æ¥è®¡ç®—ç­’ä½“å¼ºåº¦
+#åˆ¤æ–­å…¬å¼ä¼˜èƒœèŒƒå›´
     if Pc<=0.4*cigama*fi:
-        delta=Pc*Di/(2*cigama*fi-Pc)#Í²Ìå¼ÆËã
+        delta=Pc*Di/(2*cigama*fi-Pc)#ç­’ä½“è®¡ç®—
         cigamat=Pc*(Di+deltae)/2/deltae
         if cigamat<=cigama*fi:
             return(1)
         else:
             return(0)
     else:
-        return(2)#¹«Ê½²»ÊÊÓÃ·µ»Ø0
+        return(2)#å…¬å¼ä¸é€‚ç”¨è¿”å›0
 
-def fun2(a1,a2,a3):##´Ëº¯ÊıÓÃÀ´¼ÆËãĞíÓÃÓ¦Á¦
-    if a1=='Q235B':#a1Îª²ÄÁÏ a2Îªºñ¶È a3ÎªÎÂ¶È
+def fun2(a1,a2,a3):##æ­¤å‡½æ•°ç”¨æ¥è®¡ç®—è®¸ç”¨åº”åŠ›
+    if a1=='Q235B':#a1ä¸ºææ–™ a2ä¸ºåšåº¦ a3ä¸ºæ¸©åº¦
         if a2>=3 and a2<16:
             if a3<150:
                 ans=113
@@ -81,8 +81,8 @@ def fun2(a1,a2,a3):##´Ëº¯ÊıÓÃÀ´¼ÆËãĞíÓÃÓ¦Á¦
                 ans=(118-126)/50*(a3-150)+126
     return(ans)
 
-def fun3(D,S):##¼ÆËã²ÄÁÏÏÂÆ«²î
-    if D<=102:#DÍâ¾¶ Sºñ¶È
+def fun3(D,S):##è®¡ç®—ææ–™ä¸‹åå·®
+    if D<=102:#Då¤–å¾„ Såšåº¦
         dev=max(0.125*S,0.4)
     else:
         if S/D<=0.05:dev=max(0.15*S,0.4)
@@ -90,9 +90,9 @@ def fun3(D,S):##¼ÆËã²ÄÁÏÏÂÆ«²î
         else:dev=max(0.1*S,0.4)
     return(dev)
 
-def fun4(Pc,Di,fi,cigama,C,t):###´Ë¹«Ê½ÓÃÀ´¼ÆËãÍ²ÌåÇ¿¶È
+def fun4(Pc,Di,fi,cigama,C,t):###æ­¤å…¬å¼ç”¨æ¥è®¡ç®—ç­’ä½“å¼ºåº¦
     K=1
-    deltah=K*Pc*Di/(2*cigama*fi-0.5*Pc)#·âÍ·¼ÆËã
+    deltah=K*Pc*Di/(2*cigama*fi-0.5*Pc)#å°å¤´è®¡ç®—
     if 0.87*t>(deltah+C):
         return(1)
     else:
@@ -101,20 +101,20 @@ def fun4(Pc,Di,fi,cigama,C,t):###´Ë¹«Ê½ÓÃÀ´¼ÆËãÍ²ÌåÇ¿¶È
 
 
 
-def fun5(Di):##¼ÆËã·âÍ·Èİ»ı
+def fun5(Di):##è®¡ç®—å°å¤´å®¹ç§¯
     V=pi/24*Di**3+pi/4*Di**2*25
     V=V/1000**3
     return(V)
 
-def fun6(D1,t1):##¼ÆËã·âÍ·ÖÊÁ¿
+def fun6(D1,t1):##è®¡ç®—å°å¤´è´¨é‡
     m=7.85*pi*t1*(D1**2/3+5/6*D1*t1+2/3*t1**2+(D1+t1)*25)*10**-6
     return(m)
 
 
-def fun7(Vc,Di):##ÔÚÒÑÖªÈİ»ıºÍÄÚ¾¶µÄÇé¿öÏÂ¼ÆÔ²ÖùËùĞè³¤¶È
-    L=4*Vc/(pi*Di**2)*1000**3##VcÎªÔ²ÖùÌåµÄÈİ»ı
+def fun7(Vc,Di):##åœ¨å·²çŸ¥å®¹ç§¯å’Œå†…å¾„çš„æƒ…å†µä¸‹è®¡åœ†æŸ±æ‰€éœ€é•¿åº¦
+    L=4*Vc/(pi*Di**2)*1000**3##Vcä¸ºåœ†æŸ±ä½“çš„å®¹ç§¯
     return(L)
 
-def fun8(Di,t,L):##¼ÆËãÍ²ÌåµÄÖÊÁ¿
+def fun8(Di,t,L):##è®¡ç®—ç­’ä½“çš„è´¨é‡
     m=pi*(Di+t)*L*t/1000**3*7850
     return(m)
