@@ -99,8 +99,6 @@ def fun4(Pc,Di,fi,cigama,C,t):###此公式用来计算筒体强度
         return(0)
 
 
-
-
 def fun5(Di):##计算封头容积
     V=pi/24*Di**3+pi/4*Di**2*25
     V=V/1000**3
@@ -118,3 +116,6 @@ def fun7(Vc,Di):##在已知容积和内径的情况下计圆柱所需长度
 def fun8(Di,t,L):##计算筒体的质量
     m=pi*(Di+t)*L*t/1000**3*7850
     return(m)
+
+def fun9(Di,L):##计算筒体容积
+    Vs=pi/4*Di**2*L/1000**3*7850#Di筒体内径,L筒体长度,Vs筒体容积

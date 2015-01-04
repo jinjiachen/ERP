@@ -1,5 +1,5 @@
+#-*-coding:cp936-*-
 #/usr/bin/python2.7
-#coding:cp936
 
 import wx
 import math
@@ -11,25 +11,25 @@ pi=3.14159265357
 
 class mainframe(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self,None,-1,'æŠ¥ä»·ç³»ç»Ÿ')
+        wx.Frame.__init__(self,None,-1,'±¨¼ÛÏµÍ³')
         menu=wx.Menu()
-        menu.Append(5000,'&é›¶éƒ¨ä»¶')
-        menu.Append(5001,'&å‹åŠ›å®¹å™¨')
-        menu.Append(5002,'&æ¢çƒ­å™¨')
-        menu.Append(6000,'&é€€å‡º')
+        menu.Append(5000,'&Áã²¿¼ş')
+        menu.Append(5001,'&Ñ¹Á¦ÈİÆ÷')
+        menu.Append(5002,'&»»ÈÈÆ÷')
+        menu.Append(6000,'&ÍË³ö')
         menubar=wx.MenuBar()
-        menubar.Append(menu,'æ–‡ä»¶')
-        self.SetMenuBar(menubar)#ä»¥ä¸Šä¸ºèœå•æ çš„åˆ›å»º
+        menubar.Append(menu,'ÎÄ¼ş')
+        self.SetMenuBar(menubar)#ÒÔÉÏÎª²Ëµ¥À¸µÄ´´½¨
 
         panel=wx.Panel(self)
 
-        #é©±åŠ¨äº‹ä»¶
+        #Çı¶¯ÊÂ¼ş
         self.Bind(wx.EVT_MENU,self.Onparts,id=5000)
         self.Bind(wx.EVT_MENU,self.Onvolume,id=5001)
         self.Bind(wx.EVT_MENU,self.Onheat,id=5002)
         self.Bind(wx.EVT_MENU,self.Exit,id=6000)
 
-    #å‡½æ•°éƒ¨åˆ†
+    #º¯Êı²¿·Ö
     def Onparts(self,event):
         parts_calc.PartsFrame().Show()
 

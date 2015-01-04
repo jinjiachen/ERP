@@ -1,5 +1,5 @@
+# -*- coding: cp936 -*-
 #/usr/bin/env python
-#coding=cp936
 
 import wx
 import math
@@ -8,38 +8,38 @@ import fun
 
 class VolumeFrame(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self,None,-1,'å‹åŠ›å®¹å™¨')
+        wx.Frame.__init__(self,None,-1,'Ñ¹Á¦ÈİÆ÷')
         self.panel=wx.Panel(self)
-        type=['å·²çŸ¥å‚æ•°','æœªçŸ¥æ¡ä»¶']
-        mat1=['é’¢ç®¡20','Q245R']
-        self.singlebox=wx.RadioBox(self.panel,-1,'è¯·é€‰æ‹©ç±»å‹',choices=type)
-        #####åˆ›å»ºåˆå§‹ç•Œé¢
-        self.input10=wx.Choice(self.panel,-1,(120,200),choices=mat1)#åˆ‡æ¢æ¡ä»¶æ—¶æ‰€éœ€
+        type=['ÒÑÖª²ÎÊı','Î´ÖªÌõ¼ş']
+        mat1=['¸Ö¹Ü20','Q245R']
+        self.singlebox=wx.RadioBox(self.panel,-1,'ÇëÑ¡ÔñÀàĞÍ',choices=type)
+        #####´´½¨³õÊ¼½çÃæ
+        self.input10=wx.Choice(self.panel,-1,(120,200),choices=mat1)#ÇĞ»»Ìõ¼şÊ±ËùĞè
         self.input11=wx.TextCtrl(self.panel,-1,'',(120,240))
-        self.button2=wx.Button(self.panel,-1,'ç¡®å®š',(120,440))
+        self.button2=wx.Button(self.panel,-1,'È·¶¨',(120,440))
         self.button2.Show(False)
         self.input10.Show(False)
         self.input11.Show(False)
         
-        self.text1=wx.StaticText(self.panel,-1,'å®¹å™¨å®¹ç§¯(m^3)',(20,80))
+        self.text1=wx.StaticText(self.panel,-1,'ÈİÆ÷Èİ»ı(m^3)',(20,80))
         self.input1=wx.TextCtrl(self.panel,-1,'',(120,80))
-        self.text2=wx.StaticText(self.panel,-1,'è®¾è®¡å‹åŠ›(MPa)',(20,120))
+        self.text2=wx.StaticText(self.panel,-1,'Éè¼ÆÑ¹Á¦(MPa)',(20,120))
         self.input2=wx.TextCtrl(self.panel,-1,'',(120,120))
-        self.text3=wx.StaticText(self.panel,-1,'è®¾è®¡æ¸©åº¦(â„ƒ)',(20,160))
+        self.text3=wx.StaticText(self.panel,-1,'Éè¼ÆÎÂ¶È(¡æ)',(20,160))
         self.input3=wx.TextCtrl(self.panel,-1,'',(120,160))
-        self.text4=wx.StaticText(self.panel,-1,'ç„Šæ¥ç³»æ•°',(20,200))
+        self.text4=wx.StaticText(self.panel,-1,'º¸½ÓÏµÊı',(20,200))
         self.input4=wx.TextCtrl(self.panel,-1,'',(120,200))
-        self.text5=wx.StaticText(self.panel,-1,'ç­’ä½“ææ–™',(20,240))
+        self.text5=wx.StaticText(self.panel,-1,'Í²Ìå²ÄÁÏ',(20,240))
         self.input5=wx.Choice(self.panel,-1,(120,240),choices=mat1)
-        self.text6=wx.StaticText(self.panel,-1,'ç­’ä½“å†…å¾„(mm)',(20,280))
+        self.text6=wx.StaticText(self.panel,-1,'Í²ÌåÄÚ¾¶(mm)',(20,280))
         self.input6=wx.TextCtrl(self.panel,-1,'',(120,280))
-        self.text7=wx.StaticText(self.panel,-1,'ç­’ä½“å£åš(mm)',(20,320))
+        self.text7=wx.StaticText(self.panel,-1,'Í²Ìå±Úºñ(mm)',(20,320))
         self.input7=wx.TextCtrl(self.panel,-1,'',(120,320))
-        self.text8=wx.StaticText(self.panel,-1,'å°å¤´å†…å¾„(mm)',(20,360))
+        self.text8=wx.StaticText(self.panel,-1,'·âÍ·ÄÚ¾¶(mm)',(20,360))
         self.input8=wx.TextCtrl(self.panel,-1,'',(120,360))
-        self.text9=wx.StaticText(self.panel,-1,'å°å¤´å£åš(mm)',(20,400))
+        self.text9=wx.StaticText(self.panel,-1,'·âÍ·±Úºñ(mm)',(20,400))
         self.input9=wx.TextCtrl(self.panel,-1,'',(120,400))
-        self.button1=wx.Button(self.panel,-1,'ç¡®å®š',(120,440))
+        self.button1=wx.Button(self.panel,-1,'È·¶¨',(120,440))
 
 
         self.Bind(wx.EVT_RADIOBOX,self.GetIndex,self.singlebox)
@@ -50,20 +50,20 @@ class VolumeFrame(wx.Frame):
     def GetIndex(self,event):
         
         
-        if self.singlebox.GetSelection()==0:#ä¸åŒçš„é€‰é¡¹å¯¹åº”ä¸åŒçš„å‚æ•°
-            self.text1.SetLabel('å®¹å™¨å®¹ç§¯(m^3)')
-            self.text2.SetLabel('è®¾è®¡å‹åŠ›(MPa)')
-            self.text3.SetLabel('è®¾è®¡æ¸©åº¦(â„ƒ)')
-            self.text4.SetLabel('ç„Šæ¥ç³»æ•°')
-            self.text5.SetLabel('ç­’ä½“ææ–™')
-            self.text7.SetLabel('ç­’ä½“å£åš(mm)')
-            self.text9.SetLabel('å°å¤´å£åš(mm)')
+        if self.singlebox.GetSelection()==0:#²»Í¬µÄÑ¡Ïî¶ÔÓ¦²»Í¬µÄ²ÎÊı
+            self.text1.SetLabel('ÈİÆ÷Èİ»ı(m^3)')
+            self.text2.SetLabel('Éè¼ÆÑ¹Á¦(MPa)')
+            self.text3.SetLabel('Éè¼ÆÎÂ¶È(¡æ)')
+            self.text4.SetLabel('º¸½ÓÏµÊı')
+            self.text5.SetLabel('Í²Ìå²ÄÁÏ')
+            self.text7.SetLabel('Í²Ìå±Úºñ(mm)')
+            self.text9.SetLabel('·âÍ·±Úºñ(mm)')
             if self.input5.GetStringSelection()=='Q245R':
-                self.text6.SetLabel('ç­’ä½“å†…å¾„(mm)')
-                self.text8.SetLabel('å°å¤´å†…å¾„(mm)')
+                self.text6.SetLabel('Í²ÌåÄÚ¾¶(mm)')
+                self.text8.SetLabel('·âÍ·ÄÚ¾¶(mm)')
             else:
-                self.text6.SetLabel('ç­’ä½“å¤–å¾„(mm)')
-                self.text8.SetLabel('å°å¤´å¤–å¾„(mm)')
+                self.text6.SetLabel('Í²ÌåÍâ¾¶(mm)')
+                self.text8.SetLabel('·âÍ·Íâ¾¶(mm)')
 
             self.input4.Show(True)
             self.input5.Show(True)
@@ -74,15 +74,15 @@ class VolumeFrame(wx.Frame):
 
 
         elif self.singlebox.GetSelection()==1:            
-            self.text1.SetLabel('è®¾è®¡å‹åŠ›(MPa)')
-            self.text2.SetLabel('è®¾è®¡æ¸©åº¦(â„ƒ)')
-            self.text3.SetLabel('ç„Šæ¥ç³»æ•°')
-            self.text4.SetLabel('ç­’ä½“ææ–™')
-            self.text5.SetLabel('ç­’ä½“å†…å¾„(mm)')
-            self.text6.SetLabel('ç­’ä½“å£åš(mm)')
-            self.text7.SetLabel('ç­’ä½“é•¿åº¦(mm)')
-            self.text8.SetLabel('å°å¤´å†…å¾„(mm)')
-            self.text9.SetLabel('å°å¤´å£åš(mm)')
+            self.text1.SetLabel('Éè¼ÆÑ¹Á¦(MPa)')
+            self.text2.SetLabel('Éè¼ÆÎÂ¶È(¡æ)')
+            self.text3.SetLabel('º¸½ÓÏµÊı')
+            self.text4.SetLabel('Í²Ìå²ÄÁÏ')
+            self.text5.SetLabel('Í²ÌåÄÚ¾¶(mm)')
+            self.text6.SetLabel('Í²Ìå±Úºñ(mm)')
+            self.text7.SetLabel('Í²Ìå³¤¶È(mm)')
+            self.text8.SetLabel('·âÍ·ÄÚ¾¶(mm)')
+            self.text9.SetLabel('·âÍ·±Úºñ(mm)')
             
             self.input4.Show(False)
             self.input5.Show(False)
@@ -96,36 +96,36 @@ class VolumeFrame(wx.Frame):
 
     def fun1(self,event):
         test=self.input5.GetStringSelection().encode('utf-8')
-        Pc=float(self.input2.GetValue())#è®¾è®¡å‹åŠ›
-        fi=float(self.input4.GetValue())#ç„Šæ¥ç³»æ•°
-        t=float(self.input7.GetValue())#ç­’ä½“å£åš
-        t1=float(self.input9.GetValue())#å°å¤´åšåº¦
-        tem=float(self.input3.GetValue())#è®¾è®¡æ¸©åº¦
-        cigama=fun.fun2(test,t,tem)#ç­’ä½“çš„ææ–™è®¸ç”¨åº”åŠ›
+        Pc=float(self.input2.GetValue())#Éè¼ÆÑ¹Á¦
+        fi=float(self.input4.GetValue())#º¸½ÓÏµÊı
+        t=float(self.input7.GetValue())#Í²Ìå±Úºñ
+        t1=float(self.input9.GetValue())#·âÍ·ºñ¶È
+        tem=float(self.input3.GetValue())#Éè¼ÆÎÂ¶È
+        cigama=fun.fun2(test,t,tem)#Í²ÌåµÄ²ÄÁÏĞíÓÃÓ¦Á¦
         if test=='Q245R':
             C=1.3
-            Di=float(self.input6.GetValue())#ç­’ä½“å†…å¾„
-            D1=float(self.input8.GetValue())#å°å¤´çš„å†…å¾„
+            Di=float(self.input6.GetValue())#Í²ÌåÄÚ¾¶
+            D1=float(self.input8.GetValue())#·âÍ·µÄÄÚ¾¶
         else:
-            D=float(self.input6.GetValue())#ç­’ä½“å¤–å¾„
-            S=float(self.input7.GetValue())#ç­’ä½“å£åš
-            C1=fun.fun3(D,S)#ç­’ä½“ææ–™ä¸‹åå·®
+            D=float(self.input6.GetValue())#Í²ÌåÍâ¾¶
+            S=float(self.input7.GetValue())#Í²Ìå±Úºñ
+            C1=fun.fun3(D,S)#Í²Ìå²ÄÁÏÏÂÆ«²î
             C=1+C1
-            Di=D-2*t#å½“ææ–™ä¸ºé’¢ç®¡20æ—¶ç­’ä½“çš„å†…å¾„
-            D1=float(self.input8.GetValue())-2*t1#å°å¤´ä¸ºEHBæ—¶çš„å†…å¾„
-        deltae=t-C#ç­’ä½“çš„æœ‰æ•ˆåšåº¦
-        result1=fun.fun1(Pc,Di,fi,cigama,deltae)#ç­’ä½“è®¡ç®—å¼ºåº¦å›è¿”å€¼
-        result2=fun.fun4(Pc,D1,fi,fun.fun2('Q245R',t1,tem),1.3,t1)#å°å¤´å¼ºåº¦è®¡ç®—è¿”å›å€¼
+            Di=D-2*t#µ±²ÄÁÏÎª¸Ö¹Ü20Ê±Í²ÌåµÄÄÚ¾¶
+            D1=float(self.input8.GetValue())-2*t1#·âÍ·ÎªEHBÊ±µÄÄÚ¾¶
+        deltae=t-C#Í²ÌåµÄÓĞĞ§ºñ¶È
+        result1=fun.fun1(Pc,Di,fi,cigama,deltae)#Í²Ìå¼ÆËãÇ¿¶È»Ø·µÖµ
+        result2=fun.fun4(Pc,D1,fi,fun.fun2('Q245R',t1,tem),1.3,t1)#·âÍ·Ç¿¶È¼ÆËã·µ»ØÖµ
         if result1==1 and result2:
-            wx.MessageBox('ç­’ä½“å’Œå°å¤´å¼ºåº¦æ»¡è¶³!','ä¿¡æ¯',style=wx.OK)
+            wx.MessageBox('Í²ÌåºÍ·âÍ·Ç¿¶ÈÂú×ã!','ĞÅÏ¢',style=wx.OK)
         elif result1==0 and result2==0:
-            wx.MessageBox('ç­’ä½“å’Œå°å¤´å¼ºåº¦éƒ½ä¸æ»¡è¶³!','è­¦å‘Š',style=wx.OK)
+            wx.MessageBox('Í²ÌåºÍ·âÍ·Ç¿¶È¶¼²»Âú×ã!','¾¯¸æ',style=wx.OK)
         elif result1==0:
-            wx.MessageBox('ç­’ä½“å¼ºåº¦ä¸æ»¡è¶³!','è­¦å‘Š',style=wx.OK)
+            wx.MessageBox('Í²ÌåÇ¿¶È²»Âú×ã!','¾¯¸æ',style=wx.OK)
         elif result2==0:
-            wx.MessageBox('å°å¤´å¼ºåº¦ä¸æ»¡è¶³!','è­¦å‘Š',style=wx.OK)
+            wx.MessageBox('·âÍ·Ç¿¶È²»Âú×ã!','¾¯¸æ',style=wx.OK)
         elif result1==2:
-            wx.MessageBox('å…¬å¼ä¸é€‚ç”¨','è­¦å‘Š',style=wx.OK)
+            wx.MessageBox('¹«Ê½²»ÊÊÓÃ','¾¯¸æ',style=wx.OK)
         
         V=fun.fun5(D1)
         print V
@@ -136,47 +136,47 @@ class VolumeFrame(wx.Frame):
 
     def fun2(self,event):
         test=self.input10.GetStringSelection().encode('utf-8')
-        Pc=float(self.input1.GetValue())#è®¾è®¡å‹åŠ›
-        tem=float(self.input2.GetValue())#è®¾è®¡æ¸©åº¦
-        fi=float(self.input3.GetValue())#ç„Šæ¥ç³»æ•°
-#        Di=float(self.input11.GetValue())#ç­’ä½“å†…å¾„
-        t=float(self.input6.GetValue())#ç­’ä½“å£åš
-        L=float(self.input7.GetValue())#ç­’ä½“é•¿åº¦
-#        D1=float(self.input8.GetValue())#å°å¤´çš„å†…å¾„
-        t1=float(self.input9.GetValue())#å°å¤´åšåº¦
-        cigama=fun.fun2(test,t,tem)#ç­’ä½“çš„ææ–™è®¸ç”¨åº”åŠ›
+        Pc=float(self.input1.GetValue())#Éè¼ÆÑ¹Á¦
+        tem=float(self.input2.GetValue())#Éè¼ÆÎÂ¶È
+        fi=float(self.input3.GetValue())#º¸½ÓÏµÊı
+#        Di=float(self.input11.GetValue())#Í²ÌåÄÚ¾¶
+        t=float(self.input6.GetValue())#Í²Ìå±Úºñ
+        L=float(self.input7.GetValue())#Í²Ìå³¤¶È
+#        D1=float(self.input8.GetValue())#·âÍ·µÄÄÚ¾¶
+        t1=float(self.input9.GetValue())#·âÍ·ºñ¶È
+        cigama=fun.fun2(test,t,tem)#Í²ÌåµÄ²ÄÁÏĞíÓÃÓ¦Á¦
         if test=='Q245R':
             C=1.3
-            Di=float(self.input11.GetValue())#ç­’ä½“å†…å¾„
-            D1=float(self.input8.GetValue())#å°å¤´çš„å†…å¾„
+            Di=float(self.input11.GetValue())#Í²ÌåÄÚ¾¶
+            D1=float(self.input8.GetValue())#·âÍ·µÄÄÚ¾¶
         else:
-            D=float(self.input11.GetValue())#ç­’ä½“å¤–å¾„
-            S=float(self.input6.GetValue())#ç­’ä½“å£åš
-            C1=fun.fun3(D,S)#ç­’ä½“ææ–™ä¸‹åå·®
+            D=float(self.input11.GetValue())#Í²ÌåÍâ¾¶
+            S=float(self.input6.GetValue())#Í²Ìå±Úºñ
+            C1=fun.fun3(D,S)#Í²Ìå²ÄÁÏÏÂÆ«²î
             C=1+C1
-            Di=D-2*t#å½“ææ–™ä¸ºé’¢ç®¡20æ—¶ç­’ä½“çš„å†…å¾„
-            D1=float(self.input8.GetValue())-2*t1#å°å¤´ä¸ºEHBæ—¶çš„å†…å¾„
-        deltae=t-C#ç­’ä½“çš„æœ‰æ•ˆåšåº¦
-        result1=fun.fun1(Pc,Di,fi,cigama,deltae)#ç­’ä½“è®¡ç®—å¼ºåº¦å›è¿”å€¼
-        result2=fun.fun4(Pc,D1,fi,fun.fun2('Q245R',t1,tem),1.3,t1)#å°å¤´å¼ºåº¦è®¡ç®—è¿”å›å€¼
+            Di=D-2*t#µ±²ÄÁÏÎª¸Ö¹Ü20Ê±Í²ÌåµÄÄÚ¾¶
+            D1=float(self.input8.GetValue())-2*t1#·âÍ·ÎªEHBÊ±µÄÄÚ¾¶
+        deltae=t-C#Í²ÌåµÄÓĞĞ§ºñ¶È
+        result1=fun.fun1(Pc,Di,fi,cigama,deltae)#Í²Ìå¼ÆËãÇ¿¶È»Ø·µÖµ
+        result2=fun.fun4(Pc,D1,fi,fun.fun2('Q245R',t1,tem),1.3,t1)#·âÍ·Ç¿¶È¼ÆËã·µ»ØÖµ
         if result1==1 and result2:
-            wx.MessageBox('ç­’ä½“å’Œå°å¤´å¼ºåº¦æ»¡è¶³!','ä¿¡æ¯',style=wx.OK)
+            wx.MessageBox('Í²ÌåºÍ·âÍ·Ç¿¶ÈÂú×ã!','ĞÅÏ¢',style=wx.OK)
         elif result1==0 and result2==0:
-            wx.MessageBox('ç­’ä½“å’Œå°å¤´å¼ºåº¦éƒ½ä¸æ»¡è¶³!','è­¦å‘Š',style=wx.OK)
+            wx.MessageBox('Í²ÌåºÍ·âÍ·Ç¿¶È¶¼²»Âú×ã!','¾¯¸æ',style=wx.OK)
         elif result1==0:
-            wx.MessageBox('ç­’ä½“å¼ºåº¦ä¸æ»¡è¶³!','è­¦å‘Š',style=wx.OK)
+            wx.MessageBox('Í²ÌåÇ¿¶È²»Âú×ã!','¾¯¸æ',style=wx.OK)
         elif result2==0:
-            wx.MessageBox('å°å¤´å¼ºåº¦ä¸æ»¡è¶³!','è­¦å‘Š',style=wx.OK)
+            wx.MessageBox('·âÍ·Ç¿¶È²»Âú×ã!','¾¯¸æ',style=wx.OK)
         elif result1==2:
-            wx.MessageBox('å…¬å¼ä¸é€‚ç”¨','è­¦å‘Š',style=wx.OK)
+            wx.MessageBox('¹«Ê½²»ÊÊÓÃ','¾¯¸æ',style=wx.OK)
         
     def renew(self,event):
-        if self.input5.GetStringSelection().encode('cp936')=='é’¢ç®¡20':
-            self.text6.SetLabel('ç­’ä½“å¤–å¾„(mm)')
-            self.text8.SetLabel('å°å¤´å¤–å¾„(mm)')
+        if self.input5.GetStringSelection().encode('cp936')=='¸Ö¹Ü20':
+            self.text6.SetLabel('Í²ÌåÍâ¾¶(mm)')
+            self.text8.SetLabel('·âÍ·Íâ¾¶(mm)')
         else:
-            self.text6.SetLabel('ç­’ä½“å†…å¾„(mm)')
-            self.text8.SetLabel('å°å¤´å†…å¾„(mm)')
+            self.text6.SetLabel('Í²ÌåÄÚ¾¶(mm)')
+            self.text8.SetLabel('·âÍ·ÄÚ¾¶(mm)')
             
             
 
