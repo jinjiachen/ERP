@@ -4,6 +4,7 @@
 import wx
 import math
 import fun
+import create_excel
 
 
 class VolumeFrame(wx.Frame):
@@ -45,11 +46,10 @@ class VolumeFrame(wx.Frame):
         self.Bind(wx.EVT_RADIOBOX,self.GetIndex,self.singlebox)
         self.Bind(wx.EVT_BUTTON,self.fun1,self.button1)
         self.Bind(wx.EVT_BUTTON,self.fun2,self.button2)
-        self.Bind(wx.EVT_CHOICE,self.renew,self.input5)
+        self.Bind(wx.EVT_CHOICE,self.renew1,self.input5)
+        self.Bind(wx.EVT_CHOICE,self.renew2,self.input10)
 
-    def GetIndex(self,event):
-        
-        
+    def GetIndex(self,event):        
         if self.singlebox.GetSelection()==0:#不同的选项对应不同的参数
             self.text1.SetLabel('容器容积(m^3)')
             self.text2.SetLabel('设计压力(MPa)')
@@ -83,6 +83,12 @@ class VolumeFrame(wx.Frame):
             self.text7.SetLabel('筒体长度(mm)')
             self.text8.SetLabel('封头内径(mm)')
             self.text9.SetLabel('封头壁厚(mm)')
+            if self.input10.GetStringSelection()=='Q245R':
+                self.text5.SetLabel('筒体内径(mm)')
+                self.text8.SetLabel('封头内径(mm)')
+            else:
+                self.text5.SetLabel('筒体外径(mm)')
+                self.text8.SetLabel('封头外径(mm)')
             
             self.input4.Show(False)
             self.input5.Show(False)
@@ -169,13 +175,24 @@ class VolumeFrame(wx.Frame):
             wx.MessageBox('封头强度不满足!','警告',style=wx.OK)
         elif result1==2:
             wx.MessageBox('公式不适用','警告',style=wx.OK)
+
+        print fun.fun9(Di,L)+2*fun.fun5(D1)
+        create_excel.exc(self.input10.GetStringSelection(),fun.fun8(Di,t,L),fun.fun6(D1,t1))
         
-    def renew(self,event):
+    def renew1(self,event):#当选择不同的材料时，更新对应的标签
         if self.input5.GetStringSelection().encode('cp936')=='钢管20':
             self.text6.SetLabel('筒体外径(mm)')
             self.text8.SetLabel('封头外径(mm)')
         else:
             self.text6.SetLabel('筒体内径(mm)')
+            self.text8.SetLabel('封头内径(mm)')
+
+    def renew2(self,event):#当选择不同的材料时，更新对应的标签
+        if self.input10.GetStringSelection().encode('cp936')=='钢管20':
+            self.text5.SetLabel('筒体外径(mm)')
+            self.text8.SetLabel('封头外径(mm)')
+        else:
+            self.text5.SetLabel('筒体内径(mm)')
             self.text8.SetLabel('封头内径(mm)')
             
             

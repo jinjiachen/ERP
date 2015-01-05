@@ -90,7 +90,7 @@ def fun3(D,S):##计算材料下偏差
         else:dev=max(0.1*S,0.4)
     return(dev)
 
-def fun4(Pc,Di,fi,cigama,C,t):###此公式用来计算筒体强度
+def fun4(Pc,Di,fi,cigama,C,t):###此公式用来计算封头强度
     K=1
     deltah=K*Pc*Di/(2*cigama*fi-0.5*Pc)#封头计算
     if 0.87*t>(deltah+C):
@@ -118,4 +118,5 @@ def fun8(Di,t,L):##计算筒体的质量
     return(m)
 
 def fun9(Di,L):##计算筒体容积
-    Vs=pi/4*Di**2*L/1000**3*7850#Di筒体内径,L筒体长度,Vs筒体容积
+    Vs=pi/4*Di**2*L/1000**3#Di筒体内径,L筒体长度,Vs筒体容积
+    return(Vs)
