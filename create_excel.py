@@ -31,6 +31,13 @@ def exc(x1,m,x2):
     ws['D4']=2
     ws['E4']=x2
     ws['F4']=ws['E4'].value*ws['D4'].value
+    #第3行
+    ws['A5']=3
+    ws['B5']=u'接头'
+    ws['C5']=u'圆钢20'
+    ws['D5']=1
+    ws['E5']='x'
+    ws['F5']=ws['E5'].value*ws['D5'].value
 
     wb.save('D:\sample.xlsx')
 

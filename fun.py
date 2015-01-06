@@ -3,6 +3,7 @@
 
 from __future__ import division
 from math import pi
+import math
 
 
 
@@ -120,3 +121,30 @@ def fun8(Di,t,L):##计算筒体的质量
 def fun9(Di,L):##计算筒体容积
     Vs=pi/4*Di**2*L/1000**3#Di筒体内径,L筒体长度,Vs筒体容积
     return(Vs)
+
+def fun10(do,deltant,Pc,Di,fi,cigama,mt1,mt2,t,tem,ou1,in1,deltae,cigama1):###此公计算开孔补强
+    dop=do-2*deltant+2*(1+fun3(do,deltant))#do接管外径deltant接管壁厚
+    fr=fun2(mt2,deltant,tem)/fun2(mt1,t,tem)#接管材料的许用应力与筒体材料的许用应力的比值
+    if fr>1:
+        fr=1
+    if Pc<=0.4*cigama*fi:#判断公式适用范围
+        delta=Pc*Di/(2*cigama*fi-Pc)#筒体计算厚度
+    deltaet=deltant-1-fun3(do,deltant)#接管的有效厚度
+    A=dop*delta+2*delta*deltaet*(1-fr)#所需补强面积
+    print A
+    B=max(2*dop,dop+2*t+2*deltant)#有效宽度
+    h1=min(math.sqrt(dop*deltant),ou1)#有效高度
+    h2=min(math.sqrt(dop*deltant),in1)#有效高度
+    A1=(B-dop)*(deltae-delta)-2*deltaet*(deltae-delta)*(1-fr)
+    print A1
+    if Pc<=0.4*cigama1*fi:#判断公式适用范围
+        deltat=Pc*(do-2*deltant)/(2*cigama1*fi-Pc)#接管计算厚度
+    A2=2*h1*(deltaet-deltat)*fr+2*h2*(deltaet-1)*fr
+    print A2
+    if A1+A2>A:
+        return(1)
+    else:
+        return(0)
+    
+    
+        

@@ -9,12 +9,13 @@ import create_excel
 
 class VolumeFrame(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self,None,-1,'压力容器')
+        wx.Frame.__init__(self,None,-1,'压力容器',size=(700,600))
         self.panel=wx.Panel(self)
         type=['已知参数','未知条件']
         mat1=['钢管20','Q245R']
         self.singlebox=wx.RadioBox(self.panel,-1,'请选择类型',choices=type)
-        #####创建初始界面
+        #################创建初始界面
+        #开始创建筒体和封头的界面
         self.input10=wx.Choice(self.panel,-1,(120,200),choices=mat1)#切换条件时所需
         self.input11=wx.TextCtrl(self.panel,-1,'',(120,240))
         self.button2=wx.Button(self.panel,-1,'确定',(120,440))
@@ -41,13 +42,35 @@ class VolumeFrame(wx.Frame):
         self.text9=wx.StaticText(self.panel,-1,'封头壁厚(mm)',(20,400))
         self.input9=wx.TextCtrl(self.panel,-1,'',(120,400))
         self.button1=wx.Button(self.panel,-1,'确定',(120,440))
+        #筒体和封头界面结束
+
+        self.Bind(wx.EVT_RADIOBOX,self.GetIndex,self.singlebox)#单选按钮的事件
+        self.Bind(wx.EVT_BUTTON,self.fun1,self.button1)#按钮1的事件
+        self.Bind(wx.EVT_BUTTON,self.fun2,self.button2)#按钮2的事件
+        self.Bind(wx.EVT_CHOICE,self.renew1,self.input5)#第一个下拉选择的更新事件
+        self.Bind(wx.EVT_CHOICE,self.renew2,self.input10)#第二个下拉选择的更新事件
 
 
-        self.Bind(wx.EVT_RADIOBOX,self.GetIndex,self.singlebox)
-        self.Bind(wx.EVT_BUTTON,self.fun1,self.button1)
-        self.Bind(wx.EVT_BUTTON,self.fun2,self.button2)
-        self.Bind(wx.EVT_CHOICE,self.renew1,self.input5)
-        self.Bind(wx.EVT_CHOICE,self.renew2,self.input10)
+        #开始创建开孔补强界面
+#        list1=['无补强圈','有补强圈']
+        list1=['筒体','椭圆封头','平盖封头']
+        list2=['钢管20','圆钢20']
+        self.singlebox1=wx.RadioBox(self.panel,-1,'开孔补强位置',choices=list1,pos=(400,0))
+        self.text21=wx.StaticText(self.panel,-1,'接管外径(mm)',(400,80))
+        self.input21=wx.TextCtrl(self.panel,-1,'',(500,80))
+        self.text22=wx.StaticText(self.panel,-1,'接管壁厚(mm)',(400,120))
+        self.input22=wx.TextCtrl(self.panel,-1,'',(500,120))
+        self.text23=wx.StaticText(self.panel,-1,'接管材料',(400,160))
+        self.input23=wx.Choice(self.panel,-1,(500,160),choices=list2)
+        self.text24=wx.StaticText(self.panel,-1,'外伸长度(mm)',(400,200))
+        self.input24=wx.TextCtrl(self.panel,-1,'',(500,200))
+        self.text25=wx.StaticText(self.panel,-1,'内伸长度(mm)',(400,240))
+        self.input25=wx.TextCtrl(self.panel,-1,'',(500,240))
+        button3=wx.Button(self.panel,-1,'计算',(400,280))
+        #开孔补强界面结束
+
+        self.Bind(wx.EVT_BUTTON,self.fun3,button3)#计算开孔补强事件
+        
 
     def GetIndex(self,event):        
         if self.singlebox.GetSelection()==0:#不同的选项对应不同的参数
@@ -134,21 +157,19 @@ class VolumeFrame(wx.Frame):
             wx.MessageBox('公式不适用','警告',style=wx.OK)
         
         V=fun.fun5(D1)
-        print V
+#        print V
         L=fun.fun7(float(self.input1.GetValue())-2*V,Di)
-        print L
+#        print L
         m=fun.fun8(Di,t,L)
-        print m
+#        print m
 
     def fun2(self,event):
         test=self.input10.GetStringSelection().encode('utf-8')
         Pc=float(self.input1.GetValue())#设计压力
         tem=float(self.input2.GetValue())#设计温度
         fi=float(self.input3.GetValue())#焊接系数
-#        Di=float(self.input11.GetValue())#筒体内径
         t=float(self.input6.GetValue())#筒体壁厚
         L=float(self.input7.GetValue())#筒体长度
-#        D1=float(self.input8.GetValue())#封头的内径
         t1=float(self.input9.GetValue())#封头厚度
         cigama=fun.fun2(test,t,tem)#筒体的材料许用应力
         if test=='Q245R':
@@ -176,8 +197,61 @@ class VolumeFrame(wx.Frame):
         elif result1==2:
             wx.MessageBox('公式不适用','警告',style=wx.OK)
 
-        print fun.fun9(Di,L)+2*fun.fun5(D1)
+#        print fun.fun9(Di,L)+2*fun.fun5(D1)
         create_excel.exc(self.input10.GetStringSelection(),fun.fun8(Di,t,L),fun.fun6(D1,t1))
+
+    def fun3(self,event):
+        do=float(self.input21.GetValue())#接管外径
+        deltant=float(self.input22.GetValue())#接管壁厚
+        mt2=self.input23.GetStringSelection()#接管的材料
+        ou1=float(self.input24.GetValue())#接管外伸长度
+        in1=float(self.input25.GetValue())#接管内伸长度
+        tem=float(self.input3.GetValue())#设计温度
+        cigama1=fun.fun2(mt2,deltant,tem)#接管在设计温度下的许用应力
+        if self.singlebox.GetSelection()==0:#不同的选项对应不同的参数
+            test=self.input5.GetStringSelection().encode('utf-8')
+            Pc=float(self.input2.GetValue())#设计压力
+            fi=float(self.input4.GetValue())#焊接系数
+            t=float(self.input7.GetValue())#筒体壁厚
+            t1=float(self.input9.GetValue())#封头厚度
+            cigama=fun.fun2(test,t,tem)#筒体的材料许用应力
+            if test=='Q245R':
+                C=1.3
+                Di=float(self.input6.GetValue())#筒体内径
+                D1=float(self.input8.GetValue())#封头的内径
+            else:
+                D=float(self.input6.GetValue())#筒体外径
+                S=float(self.input7.GetValue())#筒体壁厚
+                C1=fun.fun3(D,S)#筒体材料下偏差
+                C=1+C1
+                Di=D-2*t#当材料为钢管20时筒体的内径
+                D1=float(self.input8.GetValue())-2*t1#封头为EHB时的内径
+            deltae=t-C#筒体的有效厚度
+        elif self.singlebox.GetSelection()==1:
+            test=self.input10.GetStringSelection().encode('utf-8')
+            Pc=float(self.input1.GetValue())#设计压力
+            fi=float(self.input3.GetValue())#焊接系数
+            t=float(self.input6.GetValue())#筒体壁厚
+            L=float(self.input7.GetValue())#筒体长度
+            t1=float(self.input9.GetValue())#封头厚度
+            cigama=fun.fun2(test,t,tem)#筒体的材料许用应力
+            if test=='Q245R':
+                C=1.3
+                Di=float(self.input11.GetValue())#筒体内径
+                D1=float(self.input8.GetValue())#封头的内径
+            else:
+                D=float(self.input11.GetValue())#筒体外径
+                S=float(self.input6.GetValue())#筒体壁厚
+                C1=fun.fun3(D,S)#筒体材料下偏差
+                C=1+C1
+                Di=D-2*t#当材料为钢管20时筒体的内径
+                D1=float(self.input8.GetValue())-2*t1#封头为EHB时的内径
+            deltae=t-C#筒体的有效厚度
+        result=fun.fun10(do,deltant,Pc,Di,fi,cigama,test,mt2,t,tem,ou1,in1,deltae,cigama1)
+        if result==1:
+            wx.MessageBox('开孔补强满足强度要求!','信息',style=wx.OK)
+        
+        
         
     def renew1(self,event):#当选择不同的材料时，更新对应的标签
         if self.input5.GetStringSelection().encode('cp936')=='钢管20':
