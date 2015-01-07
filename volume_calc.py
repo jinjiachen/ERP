@@ -54,7 +54,7 @@ class VolumeFrame(wx.Frame):
         #开始创建开孔补强界面
 #        list1=['无补强圈','有补强圈']
         list1=['筒体','椭圆封头','平盖封头']
-        list2=['钢管20','圆钢20']
+        list2=['钢管20','Q245R']
         self.singlebox1=wx.RadioBox(self.panel,-1,'开孔补强位置',choices=list1,pos=(400,0))
         self.text21=wx.StaticText(self.panel,-1,'接管外径(mm)',(400,80))
         self.input21=wx.TextCtrl(self.panel,-1,'',(500,80))
@@ -66,7 +66,7 @@ class VolumeFrame(wx.Frame):
         self.input24=wx.TextCtrl(self.panel,-1,'',(500,200))
         self.text25=wx.StaticText(self.panel,-1,'内伸长度(mm)',(400,240))
         self.input25=wx.TextCtrl(self.panel,-1,'',(500,240))
-        button3=wx.Button(self.panel,-1,'计算',(400,280))
+        button3=wx.Button(self.panel,-1,'计算(等面积补强法)',(400,280))
         #开孔补强界面结束
 
         self.Bind(wx.EVT_BUTTON,self.fun3,button3)#计算开孔补强事件
@@ -124,7 +124,7 @@ class VolumeFrame(wx.Frame):
             
 
     def fun1(self,event):
-        test=self.input5.GetStringSelection().encode('utf-8')
+        test=self.input5.GetStringSelection().encode('cp936')
         Pc=float(self.input2.GetValue())#设计压力
         fi=float(self.input4.GetValue())#焊接系数
         t=float(self.input7.GetValue())#筒体壁厚
@@ -164,7 +164,7 @@ class VolumeFrame(wx.Frame):
 #        print m
 
     def fun2(self,event):
-        test=self.input10.GetStringSelection().encode('utf-8')
+        test=self.input10.GetStringSelection().encode('cp936')
         Pc=float(self.input1.GetValue())#设计压力
         tem=float(self.input2.GetValue())#设计温度
         fi=float(self.input3.GetValue())#焊接系数
@@ -203,14 +203,13 @@ class VolumeFrame(wx.Frame):
     def fun3(self,event):
         do=float(self.input21.GetValue())#接管外径
         deltant=float(self.input22.GetValue())#接管壁厚
-        mt2=self.input23.GetStringSelection()#接管的材料
+        mt2=self.input23.GetStringSelection().encode('cp936')#接管的材料
         ou1=float(self.input24.GetValue())#接管外伸长度
         in1=float(self.input25.GetValue())#接管内伸长度
-        tem=float(self.input3.GetValue())#设计温度
-        cigama1=fun.fun2(mt2,deltant,tem)#接管在设计温度下的许用应力
         if self.singlebox.GetSelection()==0:#不同的选项对应不同的参数
-            test=self.input5.GetStringSelection().encode('utf-8')
+            test=self.input5.GetStringSelection().encode('cp936')
             Pc=float(self.input2.GetValue())#设计压力
+            tem=float(self.input3.GetValue())#设计温度
             fi=float(self.input4.GetValue())#焊接系数
             t=float(self.input7.GetValue())#筒体壁厚
             t1=float(self.input9.GetValue())#封头厚度
@@ -228,8 +227,9 @@ class VolumeFrame(wx.Frame):
                 D1=float(self.input8.GetValue())-2*t1#封头为EHB时的内径
             deltae=t-C#筒体的有效厚度
         elif self.singlebox.GetSelection()==1:
-            test=self.input10.GetStringSelection().encode('utf-8')
+            test=self.input10.GetStringSelection().encode('cp936')
             Pc=float(self.input1.GetValue())#设计压力
+            tem=float(self.input2.GetValue())#设计温度
             fi=float(self.input3.GetValue())#焊接系数
             t=float(self.input6.GetValue())#筒体壁厚
             L=float(self.input7.GetValue())#筒体长度
@@ -247,7 +247,14 @@ class VolumeFrame(wx.Frame):
                 Di=D-2*t#当材料为钢管20时筒体的内径
                 D1=float(self.input8.GetValue())-2*t1#封头为EHB时的内径
             deltae=t-C#筒体的有效厚度
-        result=fun.fun10(do,deltant,Pc,Di,fi,cigama,test,mt2,t,tem,ou1,in1,deltae,cigama1)
+        cigama1=fun.fun2(mt2,deltant,tem)#接管在设计温度下的许用应力
+        bra=self.singlebox1.GetStringSelection().encode('cp936')
+        if bra=='筒体':
+            result=fun.fun10(do,deltant,Pc,Di,fi,cigama,test,mt2,t,tem,ou1,in1,deltae,cigama1,bra)
+        elif bra=='椭圆封头':
+            result=fun.fun10(do,deltant,Pc,D1,fi,fun.fun2('Q245R',t1,tem),'Q245R',mt2,t1,tem,ou1,in1,(t1-1.3),cigama1,bra)
+#        elif bra=='平盖封头':
+#            result
         if result==1:
             wx.MessageBox('开孔补强满足强度要求!','信息',style=wx.OK)
         
