@@ -135,9 +135,6 @@ def fun10(do,deltant,Pc,Di,fi,cigama,mt1,mt2,t,tem,ou1,in1,deltae,cigama1,bra):#
     elif bra=='椭圆封头':
         delta=0.9*Pc*Di/(2*cigama*fi-0.5*Pc)#封头计算厚度,0.9为系数K1
         A=dop*delta+2*delta*deltaet*(1-fr)#所需补强面积
-#    elif bra=='平盖封头':
-#        delta=
-#        A=0.5*dop*deltap
     print A    
     B=max(2*dop,dop+2*t+2*deltant)#有效宽度
     h1=min(math.sqrt(dop*deltant),ou1)#有效高度

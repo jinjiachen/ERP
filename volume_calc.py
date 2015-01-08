@@ -9,7 +9,7 @@ import create_excel
 
 class VolumeFrame(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self,None,-1,'压力容器',size=(700,600))
+        wx.Frame.__init__(self,None,-1,'压力容器',(10,10),(700,700))
         self.panel=wx.Panel(self)
         type=['已知参数','未知条件']
         mat1=['钢管20','Q245R']
@@ -50,10 +50,8 @@ class VolumeFrame(wx.Frame):
         self.Bind(wx.EVT_CHOICE,self.renew1,self.input5)#第一个下拉选择的更新事件
         self.Bind(wx.EVT_CHOICE,self.renew2,self.input10)#第二个下拉选择的更新事件
 
-
         #开始创建开孔补强界面
-#        list1=['无补强圈','有补强圈']
-        list1=['筒体','椭圆封头','平盖封头']
+        list1=['无','筒体','椭圆封头']
         list2=['钢管20','Q245R']
         self.singlebox1=wx.RadioBox(self.panel,-1,'开孔补强位置',choices=list1,pos=(400,0))
         self.text21=wx.StaticText(self.panel,-1,'接管外径(mm)',(400,80))
@@ -69,7 +67,39 @@ class VolumeFrame(wx.Frame):
         button3=wx.Button(self.panel,-1,'计算(等面积补强法)',(400,280))
         #开孔补强界面结束
 
+        #初始化
+        self.text21.Disable()
+        self.text22.Disable()
+        self.text23.Disable()
+        self.text24.Disable()
+        self.text25.Disable()
+        self.input21.Disable()
+        self.input22.Disable()
+        self.input23.Disable()
+        self.input24.Disable()
+        self.input25.Disable()
+            
         self.Bind(wx.EVT_BUTTON,self.fun3,button3)#计算开孔补强事件
+        self.Bind(wx.EVT_RADIOBOX,self.renew4,self.singlebox1)#对开孔界面进行更新
+
+        #鞍式支座界面的创建
+        list3=['有垫板的鞍式支座','无垫板的鞍式支座']
+        self.singlebox2=wx.RadioBox(self.panel,-1,'鞍式支座类型',choices=list3,pos=(400,320))
+        self.text26=wx.StaticText(self.panel,-1,'腹板(mm)',(400,400))
+        self.input26=wx.TextCtrl(self.panel,-1,'',(500,400))
+        self.text27=wx.StaticText(self.panel,-1,'筋板(mm)',(400,440))
+        self.input27=wx.TextCtrl(self.panel,-1,'',(500,440))
+        self.text28=wx.StaticText(self.panel,-1,'底板(mm)',(400,480))
+        self.input28=wx.TextCtrl(self.panel,-1,'',(500,480))
+        self.text29=wx.StaticText(self.panel,-1,'垫板(mm)',(400,520))
+        self.input29=wx.TextCtrl(self.panel,-1,'',(500,520))
+        #界面创建结束
+        
+        self.Bind(wx.EVT_RADIOBOX,self.renew3,self.singlebox2)#更新垫板事件
+
+        #########写入excel
+        final=wx.Button(self.panel,-1,'输出到excel',(400,560))
+        self.Bind(wx.EVT_BUTTON,self.wtexl,final)
         
 
     def GetIndex(self,event):        
@@ -198,7 +228,6 @@ class VolumeFrame(wx.Frame):
             wx.MessageBox('公式不适用','警告',style=wx.OK)
 
 #        print fun.fun9(Di,L)+2*fun.fun5(D1)
-        create_excel.exc(self.input10.GetStringSelection(),fun.fun8(Di,t,L),fun.fun6(D1,t1))
 
     def fun3(self,event):
         do=float(self.input21.GetValue())#接管外径
@@ -253,8 +282,6 @@ class VolumeFrame(wx.Frame):
             result=fun.fun10(do,deltant,Pc,Di,fi,cigama,test,mt2,t,tem,ou1,in1,deltae,cigama1,bra)
         elif bra=='椭圆封头':
             result=fun.fun10(do,deltant,Pc,D1,fi,fun.fun2('Q245R',t1,tem),'Q245R',mt2,t1,tem,ou1,in1,(t1-1.3),cigama1,bra)
-#        elif bra=='平盖封头':
-#            result
         if result==1:
             wx.MessageBox('开孔补强满足强度要求!','信息',style=wx.OK)
         
@@ -275,6 +302,82 @@ class VolumeFrame(wx.Frame):
         else:
             self.text5.SetLabel('筒体内径(mm)')
             self.text8.SetLabel('封头内径(mm)')
+
+    def renew3(self,event):#更新垫板
+        if self.singlebox2.GetSelection()==1:
+            self.text29.Disable()
+            self.input29.Disable()
+        else:
+            self.text29.Enable()
+            self.input29.Enable()
+
+    def renew4(self,event):#更新开孔界面
+        if self.singlebox1.GetSelection()==0:
+            self.text21.Disable()
+            self.text22.Disable()
+            self.text23.Disable()
+            self.text24.Disable()
+            self.text25.Disable()
+            self.input21.Disable()
+            self.input22.Disable()
+            self.input23.Disable()
+            self.input24.Disable()
+            self.input25.Disable()
+        else:
+            self.text21.Enable()
+            self.text22.Enable()
+            self.text23.Enable()
+            self.text24.Enable()
+            self.text25.Enable()
+            self.input21.Enable()
+            self.input22.Enable()
+            self.input23.Enable()
+            self.input24.Enable()
+            self.input25.Enable()
+
+    def wtexl(self,event):#写入excel
+        if self.singlebox.GetSelection()==0:#不同的选项对应不同的参数
+            test=self.input5.GetStringSelection().encode('cp936')
+            Pc=float(self.input2.GetValue())#设计压力
+            tem=float(self.input3.GetValue())#设计温度
+            fi=float(self.input4.GetValue())#焊接系数
+            t=float(self.input7.GetValue())#筒体壁厚
+            t1=float(self.input9.GetValue())#封头厚度
+            cigama=fun.fun2(test,t,tem)#筒体的材料许用应力
+            if test=='Q245R':
+                C=1.3
+                Di=float(self.input6.GetValue())#筒体内径
+                D1=float(self.input8.GetValue())#封头的内径
+            else:
+                D=float(self.input6.GetValue())#筒体外径
+                S=float(self.input7.GetValue())#筒体壁厚
+                C1=fun.fun3(D,S)#筒体材料下偏差
+                C=1+C1
+                Di=D-2*t#当材料为钢管20时筒体的内径
+                D1=float(self.input8.GetValue())-2*t1#封头为EHB时的内径
+            deltae=t-C#筒体的有效厚度
+        elif self.singlebox.GetSelection()==1:
+            test=self.input10.GetStringSelection().encode('cp936')
+            Pc=float(self.input1.GetValue())#设计压力
+            tem=float(self.input2.GetValue())#设计温度
+            fi=float(self.input3.GetValue())#焊接系数
+            t=float(self.input6.GetValue())#筒体壁厚
+            L=float(self.input7.GetValue())#筒体长度
+            t1=float(self.input9.GetValue())#封头厚度
+            cigama=fun.fun2(test,t,tem)#筒体的材料许用应力
+            if test=='Q245R':
+                C=1.3
+                Di=float(self.input11.GetValue())#筒体内径
+                D1=float(self.input8.GetValue())#封头的内径
+            else:
+                D=float(self.input11.GetValue())#筒体外径
+                S=float(self.input6.GetValue())#筒体壁厚
+                C1=fun.fun3(D,S)#筒体材料下偏差
+                C=1+C1
+                Di=D-2*t#当材料为钢管20时筒体的内径
+                D1=float(self.input8.GetValue())-2*t1#封头为EHB时的内径
+            deltae=t-C#筒体的有效厚度
+        create_excel.exc(self.input10.GetStringSelection(),fun.fun8(Di,t,L),fun.fun6(D1,t1))
             
             
 

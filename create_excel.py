@@ -14,7 +14,7 @@ def exc(x1,m,x2):
     ws['B2']=u'名称'
     ws['C2']=u'材料'
     ws['D2']=u'数量'
-    ws['E2']=u'单量'
+    ws['E2']=u'单重'
     ws['F2']=u'总重'
 #按行开始写入内容
     #第1行
@@ -38,6 +38,16 @@ def exc(x1,m,x2):
     ws['D5']=1
     ws['E5']='x'
     ws['F5']=ws['E5'].value*ws['D5'].value
+    #第4行
+    ws['A6']=3
+    ws['B6']=u'接头'
+    ws['C6']=u'圆钢20'
+    ws['D6']=1
+    ws['E6']='x'
+    ws['F6']=ws['E6'].value*ws['D6'].value
+    #test
+    for i in range(3,10):
+        ws.cell(row=i,column=1).value=i-2
 
     wb.save('D:\sample.xlsx')
 
