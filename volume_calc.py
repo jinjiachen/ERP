@@ -377,7 +377,11 @@ class VolumeFrame(wx.Frame):
                 Di=D-2*t#当材料为钢管20时筒体的内径
                 D1=float(self.input8.GetValue())-2*t1#封头为EHB时的内径
             deltae=t-C#筒体的有效厚度
-        create_excel.exc(self.input10.GetStringSelection(),fun.fun8(Di,t,L),fun.fun6(D1,t1))
+        x3=self.text26.GetLabel()
+        x4=self.text27.GetLabel()
+        x5=self.text28.GetLabel()
+        x6=self.input23.GetStringSelection()
+        create_excel.exc(self.input10.GetStringSelection(),fun.fun8(Di,t,L),fun.fun6(D1,t1),x3,x4,x5,x6)
             
             
 

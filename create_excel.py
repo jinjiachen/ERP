@@ -3,7 +3,7 @@ from openpyxl import Workbook
 from openpyxl import load_workbook
 import volume_calc
 
-def exc(x1,m,x2):
+def exc(x1,m,x2,x3,x4,x5,x6):
     wb=Workbook()
     ws=wb.active
     ws.title=u'报价单'
@@ -33,23 +33,37 @@ def exc(x1,m,x2):
     ws['F4']=ws['E4'].value*ws['D4'].value
     #第3行
     ws['A5']=3
-    ws['B5']=u'接头'
-    ws['C5']=u'圆钢20'
+    ws['B5']=u'接管'
+    ws['C5']=x6
     ws['D5']=1
     ws['E5']='x'
     ws['F5']=ws['E5'].value*ws['D5'].value
     #第4行
-    ws['A6']=3
-    ws['B6']=u'接头'
-    ws['C6']=u'圆钢20'
+    ws['A6']=4
+    ws['B6']=x3
+    ws['C6']='Q245B'
     ws['D6']=1
     ws['E6']='x'
     ws['F6']=ws['E6'].value*ws['D6'].value
+    #第5行
+    ws['A7']=5
+    ws['B7']=x4
+    ws['C7']='Q245B'
+    ws['D7']=1
+    ws['E7']='x'
+    ws['F7']=ws['E7'].value*ws['D7'].value
+    #第6行
+    ws['A8']=6
+    ws['B8']=x5
+    ws['C8']='Q245B'
+    ws['D8']=1
+    ws['E8']='x'
+    ws['F8']=ws['E8'].value*ws['D8'].value
     #test
-    for i in range(3,10):
-        ws.cell(row=i,column=1).value=i-2
+#    for i in range(3,10):
+#        ws.cell(row=i,column=1).value=i-2
 
-    wb.save('D:\sample.xlsx')
+    wb.save('D:\sample'+'s.xlsx')
 
 
 
