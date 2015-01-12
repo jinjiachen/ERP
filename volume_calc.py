@@ -86,13 +86,21 @@ class VolumeFrame(wx.Frame):
         list3=['有垫板的鞍式支座','无垫板的鞍式支座']
         self.singlebox2=wx.RadioBox(self.panel,-1,'鞍式支座类型',choices=list3,pos=(400,320))
         self.text26=wx.StaticText(self.panel,-1,'腹板(mm)',(400,400))
-        self.input26=wx.TextCtrl(self.panel,-1,'',(500,400))
+        self.input261=wx.TextCtrl(self.panel,-1,'长度',(500,400),(40,25))
+        self.input262=wx.TextCtrl(self.panel,-1,'宽度',(550,400),(40,25))
+        self.input263=wx.TextCtrl(self.panel,-1,'厚度',(600,400),(40,25))
         self.text27=wx.StaticText(self.panel,-1,'筋板(mm)',(400,440))
-        self.input27=wx.TextCtrl(self.panel,-1,'',(500,440))
+        self.input271=wx.TextCtrl(self.panel,-1,'长度',(500,440),(40,25))
+        self.input272=wx.TextCtrl(self.panel,-1,'宽度',(550,440),(40,25))
+        self.input273=wx.TextCtrl(self.panel,-1,'厚度',(600,440),(40,25))
         self.text28=wx.StaticText(self.panel,-1,'底板(mm)',(400,480))
-        self.input28=wx.TextCtrl(self.panel,-1,'',(500,480))
+        self.input281=wx.TextCtrl(self.panel,-1,'长度',(500,480),(40,25))
+        self.input282=wx.TextCtrl(self.panel,-1,'宽度',(550,480),(40,25))
+        self.input283=wx.TextCtrl(self.panel,-1,'厚度',(600,480),(40,25))
         self.text29=wx.StaticText(self.panel,-1,'垫板(mm)',(400,520))
-        self.input29=wx.TextCtrl(self.panel,-1,'',(500,520))
+        self.input291=wx.TextCtrl(self.panel,-1,'长度',(500,520),(40,25))
+        self.input292=wx.TextCtrl(self.panel,-1,'宽度',(550,520),(40,25))
+        self.input293=wx.TextCtrl(self.panel,-1,'厚度',(600,520),(40,25))
         #界面创建结束
         
         self.Bind(wx.EVT_RADIOBOX,self.renew3,self.singlebox2)#更新垫板事件
@@ -306,10 +314,14 @@ class VolumeFrame(wx.Frame):
     def renew3(self,event):#更新垫板
         if self.singlebox2.GetSelection()==1:
             self.text29.Disable()
-            self.input29.Disable()
+            self.input291.Disable()
+            self.input292.Disable()
+            self.input293.Disable()
         else:
             self.text29.Enable()
-            self.input29.Enable()
+            self.input291.Enable()
+            self.input292.Enable()
+            self.input293.Enable()
 
     def renew4(self,event):#更新开孔界面
         if self.singlebox1.GetSelection()==0:
@@ -356,6 +368,9 @@ class VolumeFrame(wx.Frame):
                 Di=D-2*t#当材料为钢管20时筒体的内径
                 D1=float(self.input8.GetValue())-2*t1#封头为EHB时的内径
             deltae=t-C#筒体的有效厚度
+            x1=self.input5.GetStringSelection()
+            V=fun.fun5(D1)
+            L=fun.fun7(float(self.input1.GetValue())-2*V,Di)
         elif self.singlebox.GetSelection()==1:
             test=self.input10.GetStringSelection().encode('cp936')
             Pc=float(self.input1.GetValue())#设计压力
@@ -377,11 +392,25 @@ class VolumeFrame(wx.Frame):
                 Di=D-2*t#当材料为钢管20时筒体的内径
                 D1=float(self.input8.GetValue())-2*t1#封头为EHB时的内径
             deltae=t-C#筒体的有效厚度
+            x1=self.input10.GetStringSelection()
         x3=self.text26.GetLabel()
         x4=self.text27.GetLabel()
         x5=self.text28.GetLabel()
         x6=self.input23.GetStringSelection()
-        create_excel.exc(self.input10.GetStringSelection(),fun.fun8(Di,t,L),fun.fun6(D1,t1),x3,x4,x5,x6)
+        m=fun.fun8(Di,t,L)
+        length1=self.input261.GetValue()
+        width1=self.input262.GetValue()
+        height1=self.input263.GetValue()
+        length2=self.input271.GetValue()
+        width2=self.input272.GetValue()
+        height2=self.input273.GetValue()
+        length3=self.input281.GetValue()
+        width3=self.input282.GetValue()
+        height3=self.input283.GetValue()
+        length4=self.input291.GetValue()
+        width4=self.input292.GetValue()
+        height4=self.input293.GetValue()
+        create_excel.exc(x1,m,fun.fun6(D1,t1),x3,x4,x5,x6,length1,width1,height1,length2,width2,height2,length3,width3,height3,length4,width4,height4)
             
             
 
