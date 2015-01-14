@@ -67,7 +67,7 @@ class VolumeFrame(wx.Frame):
         button3=wx.Button(self.panel,-1,'计算(等面积补强法)',(400,280))
         #开孔补强界面结束
 
-        #初始化
+        #开孔补强初始化
         self.text21.Disable()
         self.text22.Disable()
         self.text23.Disable()
@@ -83,7 +83,7 @@ class VolumeFrame(wx.Frame):
         self.Bind(wx.EVT_RADIOBOX,self.renew4,self.singlebox1)#对开孔界面进行更新
 
         #鞍式支座界面的创建
-        list3=['有垫板的鞍式支座','无垫板的鞍式支座']
+        list3=['无支座','有垫板','无垫板']
         self.singlebox2=wx.RadioBox(self.panel,-1,'鞍式支座类型',choices=list3,pos=(400,320))
         self.text26=wx.StaticText(self.panel,-1,'腹板(mm)',(400,400))
         self.input261=wx.TextCtrl(self.panel,-1,'长度',(500,400),(40,25))
@@ -102,12 +102,35 @@ class VolumeFrame(wx.Frame):
         self.input292=wx.TextCtrl(self.panel,-1,'宽度',(550,520),(40,25))
         self.input293=wx.TextCtrl(self.panel,-1,'厚度',(600,520),(40,25))
         #界面创建结束
+
+        #支座界面初始化
+        self.text26.Disable()
+        self.input261.Disable()
+        self.input262.Disable()
+        self.input263.Disable()
+        self.text27.Disable()
+        self.input271.Disable()
+        self.input272.Disable()
+        self.input273.Disable()
+        self.text28.Disable()
+        self.input281.Disable()
+        self.input282.Disable()
+        self.input283.Disable()
+        self.text29.Disable()
+        self.input291.Disable()
+        self.input292.Disable()
+        self.input293.Disable()
         
         self.Bind(wx.EVT_RADIOBOX,self.renew3,self.singlebox2)#更新垫板事件
 
         #########写入excel
         final=wx.Button(self.panel,-1,'输出到excel',(400,560))
         self.Bind(wx.EVT_BUTTON,self.wtexl,final)
+
+
+        ##########添加额外零件
+        extra=wx.Button(self.panel,-1,'添加额外零件',(550,560))
+        
         
 
     def GetIndex(self,event):        
@@ -312,16 +335,57 @@ class VolumeFrame(wx.Frame):
             self.text8.SetLabel('封头内径(mm)')
 
     def renew3(self,event):#更新垫板
-        if self.singlebox2.GetSelection()==1:
+        if self.singlebox2.GetSelection()==0:
+            self.text26.Disable()
+            self.input261.Disable()
+            self.input262.Disable()
+            self.input263.Disable()
+            self.text27.Disable()
+            self.input271.Disable()
+            self.input272.Disable()
+            self.input273.Disable()
+            self.text28.Disable()
+            self.input281.Disable()
+            self.input282.Disable()
+            self.input283.Disable()
             self.text29.Disable()
             self.input291.Disable()
             self.input292.Disable()
             self.input293.Disable()
-        else:
+        elif self.singlebox2.GetSelection()==1:
+            self.text26.Enable()
+            self.input261.Enable()
+            self.input262.Enable()
+            self.input263.Enable()
+            self.text27.Enable()
+            self.input271.Enable()
+            self.input272.Enable()
+            self.input273.Enable()
+            self.text28.Enable()
+            self.input281.Enable()
+            self.input282.Enable()
+            self.input283.Enable()
             self.text29.Enable()
             self.input291.Enable()
             self.input292.Enable()
             self.input293.Enable()
+        else:
+            self.text26.Enable()
+            self.input261.Enable()
+            self.input262.Enable()
+            self.input263.Enable()
+            self.text27.Enable()
+            self.input271.Enable()
+            self.input272.Enable()
+            self.input273.Enable()
+            self.text28.Enable()
+            self.input281.Enable()
+            self.input282.Enable()
+            self.input283.Enable()
+            self.text29.Disable()
+            self.input291.Disable()
+            self.input292.Disable()
+            self.input293.Disable()
 
     def renew4(self,event):#更新开孔界面
         if self.singlebox1.GetSelection()==0:
@@ -393,9 +457,8 @@ class VolumeFrame(wx.Frame):
                 D1=float(self.input8.GetValue())-2*t1#封头为EHB时的内径
             deltae=t-C#筒体的有效厚度
             x1=self.input10.GetStringSelection()
-        x3=self.text26.GetLabel()
-        x4=self.text27.GetLabel()
-        x5=self.text28.GetLabel()
+        cho1=self.singlebox1.GetStringSelection()
+        cho2=self.singlebox2.GetSelection()
         x6=self.input23.GetStringSelection()
         m=fun.fun8(Di,t,L)
         length1=self.input261.GetValue()
@@ -410,7 +473,7 @@ class VolumeFrame(wx.Frame):
         length4=self.input291.GetValue()
         width4=self.input292.GetValue()
         height4=self.input293.GetValue()
-        create_excel.exc(x1,m,fun.fun6(D1,t1),x3,x4,x5,x6,length1,width1,height1,length2,width2,height2,length3,width3,height3,length4,width4,height4)
+        create_excel.exc(x1,cho1,cho2,m,fun.fun6(D1,t1),x6,length1,width1,height1,length2,width2,height2,length3,width3,height3,length4,width4,height4)
             
             
 
