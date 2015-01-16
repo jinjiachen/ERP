@@ -26,7 +26,7 @@ class HeatTransferFrame(wx.Frame):
         self.input2=wx.TextCtrl(self.panel,-1,'',(130,110))
         self.text3=wx.StaticText(self.panel,-1,'焊接系数',(20,150))
         self.input3=wx.TextCtrl(self.panel,-1,'',(130,150))
-        self.text4=wx.StaticText(self.panel,-1,'腐蚀余量(mm)',(20,190))
+        self.text4=wx.StaticText(self.panel,-1,'壳侧腐蚀余量(mm)',(20,190))
         self.input4=wx.TextCtrl(self.panel,-1,'',(130,190))        
         self.text5=wx.StaticText(self.panel,-1,'筒体材料',(20,230))
         self.input5=wx.Choice(self.panel,-1,(130,230),choices=mat1)
@@ -43,9 +43,32 @@ class HeatTransferFrame(wx.Frame):
         self.Bind(wx.EVT_BUTTON,self.fun1,self.button1)#按钮1的事件
 
 
+        ########创建左管箱计算界面
+        self.text1=wx.StaticText(self.panel,-1,'管程设计压力(MPa)',(20,70))
+        self.input1=wx.TextCtrl(self.panel,-1,'',(130,70))
+        self.text2=wx.StaticText(self.panel,-1,'管程设计温度(℃)',(20,110))
+        self.input2=wx.TextCtrl(self.panel,-1,'',(130,110))
+        self.text3=wx.StaticText(self.panel,-1,'焊接系数',(20,150))
+        self.input3=wx.TextCtrl(self.panel,-1,'',(130,150))
+        self.text4=wx.StaticText(self.panel,-1,'管侧腐蚀余量(mm)',(20,190))
+        self.input4=wx.TextCtrl(self.panel,-1,'',(130,190))        
+        self.text5=wx.StaticText(self.panel,-1,'管箱筒体材料',(20,230))
+        self.input5=wx.Choice(self.panel,-1,(130,230),choices=mat1)
+        self.text6=wx.StaticText(self.panel,-1,'管箱筒体内径(mm)',(20,270))
+        self.input6=wx.TextCtrl(self.panel,-1,'',(130,270))
+        self.text7=wx.StaticText(self.panel,-1,'管箱筒体壁厚(mm)',(20,310))
+        self.input7=wx.TextCtrl(self.panel,-1,'',(130,310))
+        self.text8=wx.StaticText(self.panel,-1,'左管箱筒体长度(mm)',(20,350))
+        self.input8=wx.TextCtrl(self.panel,-1,'',(130,350))
+        self.text8=wx.StaticText(self.panel,-1,'右管箱筒体长度(mm)',(20,350))
+        self.input8=wx.TextCtrl(self.panel,-1,'',(130,350))        
+        self.button1=wx.Button(self.panel,-1,'计算筒体强度(内压)',(20,390))        
+        
+
+
         ################开始创建管板计算界面
-        self.singlebox2=wx.RadioBox(self.panel,-1,'钢制管板强度计算',(350,0),choices=type2)
-        if self.singlebox2.GetSelection()==0:
+        self.singlebox2=wx.RadioBox(self.panel,-1,'钢制管板强度计算',(700,0),choices=type2)
+        if self.singlebox2.GetSelection()==1:
             self.text11=wx.StaticText(self.panel,-1,'管板外径(mm)',(350,70))
             self.input11=wx.TextCtrl(self.panel,-1,'',(500,70))
             self.text12=wx.StaticText(self.panel,-1,'管板名义厚度(mm)',(350,110))
