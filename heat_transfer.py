@@ -1,5 +1,5 @@
 #/usr/bin/env python
-#coding=cp936
+#coding=utf-8
 
 import wx
 ##import wx.lib.scrolledpanel as scrolled
@@ -9,137 +9,170 @@ import fun
 
 class HeatTransferFrame(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self,None,-1,'»»ÈÈÆ÷',(10,10),(700,700))
+        wx.Frame.__init__(self,None,-1,'æ¢çƒ­å™¨',(10,10),(700,700))
         self.panel=wx.ScrolledWindow(self,-1)
-        self.panel.SetScrollbars(1, 1, 800,800)
-        type1=['Èİ»ıÎ´Öª','Èİ»ıÒÑÖª']
-        type2=['Ô²Í²Ö±¾¶D¡Ü600','Ô²Í²Ö±¾¶D>600']
-        type3=['ÕÍ½Ó','º¸½Ó']
-        mat1=['¸Ö¹Ü20','Q245R']
+        self.panel.SetScrollbars(1, 1, 800,900)
+        type1=['å®¹ç§¯æœªçŸ¥','å®¹ç§¯å·²çŸ¥']
+        type2=['åœ†ç­’ç›´å¾„Dâ‰¤600','åœ†ç­’ç›´å¾„D>600']
+        type3=['èƒ€æ¥','ç„Šæ¥']
+        mat1=['é’¢ç®¡20','Q245R']
         mat2=['Q245R','Q345R']
         mat3=['T2','TP2']
-        ############¿ªÊ¼´´½¨¿ÇÌå¼ÆËãµÄ½çÃæ
-        self.singlebox1=wx.RadioBox(self.panel,-1,'ÇëÑ¡ÔñÀàĞÍ',choices=type1)
-        self.text1=wx.StaticText(self.panel,-1,'¿Ç³ÌÉè¼ÆÑ¹Á¦(MPa)',(20,70))
+        ############å¼€å§‹åˆ›å»ºå£³ä½“è®¡ç®—çš„ç•Œé¢
+        self.singlebox1=wx.RadioBox(self.panel,-1,'è¯·é€‰æ‹©ç±»å‹',choices=type1)
+        self.text1=wx.StaticText(self.panel,-1,'å£³ç¨‹è®¾è®¡å‹åŠ›(MPa)',(20,70))
         self.input1=wx.TextCtrl(self.panel,-1,'',(130,70))
-        self.text2=wx.StaticText(self.panel,-1,'¿Ç³ÌÉè¼ÆÎÂ¶È(¡æ)',(20,110))
+        self.text2=wx.StaticText(self.panel,-1,'å£³ç¨‹è®¾è®¡æ¸©åº¦(â„ƒ)',(20,110))
         self.input2=wx.TextCtrl(self.panel,-1,'',(130,110))
-        self.text3=wx.StaticText(self.panel,-1,'º¸½ÓÏµÊı',(20,150))
+        self.text3=wx.StaticText(self.panel,-1,'ç„Šæ¥ç³»æ•°',(20,150))
         self.input3=wx.TextCtrl(self.panel,-1,'',(130,150))
-        self.text4=wx.StaticText(self.panel,-1,'¿Ç²à¸¯Ê´ÓàÁ¿(mm)',(20,190))
+        self.text4=wx.StaticText(self.panel,-1,'å£³ä¾§è…èš€ä½™é‡(mm)',(20,190))
         self.input4=wx.TextCtrl(self.panel,-1,'',(130,190))        
-        self.text5=wx.StaticText(self.panel,-1,'Í²Ìå²ÄÁÏ',(20,230))
+        self.text5=wx.StaticText(self.panel,-1,'ç­’ä½“ææ–™',(20,230))
         self.input5=wx.Choice(self.panel,-1,(130,230),choices=mat1)
-        self.text6=wx.StaticText(self.panel,-1,'Í²ÌåÄÚ¾¶(mm)',(20,270))
+        self.text6=wx.StaticText(self.panel,-1,'ç­’ä½“å†…å¾„(mm)',(20,270))
         self.input6=wx.TextCtrl(self.panel,-1,'',(130,270))
-        self.text7=wx.StaticText(self.panel,-1,'Í²Ìå±Úºñ(mm)',(20,310))
+        self.text7=wx.StaticText(self.panel,-1,'ç­’ä½“å£åš(mm)',(20,310))
         self.input7=wx.TextCtrl(self.panel,-1,'',(130,310))
-        self.text8=wx.StaticText(self.panel,-1,'Í²Ìå³¤¶È(mm)',(20,350))
+        self.text8=wx.StaticText(self.panel,-1,'ç­’ä½“é•¿åº¦(mm)',(20,350))
         self.input8=wx.TextCtrl(self.panel,-1,'',(130,350))
-        self.button1=wx.Button(self.panel,-1,'¼ÆËãÍ²ÌåÇ¿¶È(ÄÚÑ¹)',(20,390))
-        ##############´´½¨½áÊø
+        self.button1=wx.Button(self.panel,-1,'è®¡ç®—ç­’ä½“å¼ºåº¦(å†…å‹)',(20,390))
+        ##############åˆ›å»ºç»“æŸ
 
-        self.Bind(wx.EVT_CHOICE,self.renew1,self.input5)#Ñ¡Ôñ²»Í¬¿ÇÌå²ÄÁÏÊ±µÄ¸üĞÂ
-        self.Bind(wx.EVT_BUTTON,self.fun1,self.button1)#°´Å¥1µÄÊÂ¼ş
-
-
-        ########´´½¨×ó¹ÜÏä¼ÆËã½çÃæ
-        self.text1=wx.StaticText(self.panel,-1,'¹Ü³ÌÉè¼ÆÑ¹Á¦(MPa)',(20,70))
-        self.input1=wx.TextCtrl(self.panel,-1,'',(130,70))
-        self.text2=wx.StaticText(self.panel,-1,'¹Ü³ÌÉè¼ÆÎÂ¶È(¡æ)',(20,110))
-        self.input2=wx.TextCtrl(self.panel,-1,'',(130,110))
-        self.text3=wx.StaticText(self.panel,-1,'º¸½ÓÏµÊı',(20,150))
-        self.input3=wx.TextCtrl(self.panel,-1,'',(130,150))
-        self.text4=wx.StaticText(self.panel,-1,'¹Ü²à¸¯Ê´ÓàÁ¿(mm)',(20,190))
-        self.input4=wx.TextCtrl(self.panel,-1,'',(130,190))        
-        self.text5=wx.StaticText(self.panel,-1,'¹ÜÏäÍ²Ìå²ÄÁÏ',(20,230))
-        self.input5=wx.Choice(self.panel,-1,(130,230),choices=mat1)
-        self.text6=wx.StaticText(self.panel,-1,'¹ÜÏäÍ²ÌåÄÚ¾¶(mm)',(20,270))
-        self.input6=wx.TextCtrl(self.panel,-1,'',(130,270))
-        self.text7=wx.StaticText(self.panel,-1,'¹ÜÏäÍ²Ìå±Úºñ(mm)',(20,310))
-        self.input7=wx.TextCtrl(self.panel,-1,'',(130,310))
-        self.text8=wx.StaticText(self.panel,-1,'×ó¹ÜÏäÍ²Ìå³¤¶È(mm)',(20,350))
-        self.input8=wx.TextCtrl(self.panel,-1,'',(130,350))
-        self.text8=wx.StaticText(self.panel,-1,'ÓÒ¹ÜÏäÍ²Ìå³¤¶È(mm)',(20,350))
-        self.input8=wx.TextCtrl(self.panel,-1,'',(130,350))        
-        self.button1=wx.Button(self.panel,-1,'¼ÆËãÍ²ÌåÇ¿¶È(ÄÚÑ¹)',(20,390))        
-        
+        self.Bind(wx.EVT_CHOICE,self.renew1,self.input5)#é€‰æ‹©ä¸åŒå£³ä½“ææ–™æ—¶çš„æ›´æ–°
+        self.Bind(wx.EVT_BUTTON,self.fun1,self.button1)#æŒ‰é’®1çš„äº‹ä»¶
 
 
-        ################¿ªÊ¼´´½¨¹Ü°å¼ÆËã½çÃæ
-        self.singlebox2=wx.RadioBox(self.panel,-1,'¸ÖÖÆ¹Ü°åÇ¿¶È¼ÆËã',(700,0),choices=type2)
-        if self.singlebox2.GetSelection()==1:
-            self.text11=wx.StaticText(self.panel,-1,'¹Ü°åÍâ¾¶(mm)',(350,70))
-            self.input11=wx.TextCtrl(self.panel,-1,'',(500,70))
-            self.text12=wx.StaticText(self.panel,-1,'¹Ü°åÃûÒåºñ¶È(mm)',(350,110))
-            self.input12=wx.TextCtrl(self.panel,-1,'',(500,110))
-            self.text13=wx.StaticText(self.panel,-1,'¹Ü°å²ÄÁÏ',(350,150))
-            self.input13=wx.Choice(self.panel,-1,(500,150),choices=mat2)            
-            self.text14=wx.StaticText(self.panel,-1,'¹Ü¿×Ö±¾¶(mm)',(350,190))
-            self.input14=wx.TextCtrl(self.panel,-1,'',(500,190))
-            self.text15=wx.StaticText(self.panel,-1,'¿Ç²à¸¯Ê´ÓàÁ¿(mm)',(350,230))
-            self.input15=wx.TextCtrl(self.panel,-1,'',(500,230))                    
-            self.text16=wx.StaticText(self.panel,-1,'¹Ü²à¸¯Ê´ÓàÁ¿(mm)',(350,270))
-            self.input16=wx.TextCtrl(self.panel,-1,'',(500,270))
-            self.text17=wx.StaticText(self.panel,-1,'¿Ç²à½á¹¹¿ª²ÛÉî¶È(mm)',(350,310))
-            self.input17=wx.TextCtrl(self.panel,-1,'',(500,310))
-            self.text18=wx.StaticText(self.panel,-1,'¹Ü²à·Ö³Ì¸ô°å²ÛÉî¶È(mm)',(350,350))
-            self.input18=wx.TextCtrl(self.panel,-1,'',(500,350))
-            self.text19=wx.StaticText(self.panel,-1,'¹Ü°å×îĞ¡ºñ¶È(mm)',(350,390))
-            self.input19=wx.TextCtrl(self.panel,-1,'',(500,390))
-            self.text20=wx.StaticText(self.panel,-1,'¹Ü°åÓë»»ÈÈ¹ÜÁ¬½ÓĞÎÊ½',(350,430))
-            self.input20=wx.Choice(self.panel,-1,(500,430),choices=type3)            
-            self.text21=wx.StaticText(self.panel,-1,'Ò»¸ù¹Ü×ÓÖ§³Å½ØÃæ»ı(mm2)',(350,470))
-            self.input21=wx.TextCtrl(self.panel,-1,'',(500,470))
-            self.text22=wx.StaticText(self.panel,-1,'ÏµÊıC(±í20)',(350,510))
-            self.input22=wx.TextCtrl(self.panel,-1,'',(500,510))
-            self.text23=wx.StaticText(self.panel,-1,'ÓĞĞ§º¸½Ó¸ß¶È(mm)',(350,550))
-            self.input23=wx.TextCtrl(self.panel,-1,'',(500,550))
-            self.text2=wx.StaticText(self.panel,-1,'»»ÈÈ¹Ü²ÄÁÏ',(350,590))
-            self.input24=wx.Choice(self.panel,-1,(500,590),choices=mat3) 
-            self.text25=wx.StaticText(self.panel,-1,'ÓĞĞ§º¸½Ó¸ß¶È(mm)',(350,630))
-            self.input25=wx.TextCtrl(self.panel,-1,'',(500,630))
-            self.text25=wx.StaticText(self.panel,-1,'»»ÈÈ¹ÜÍâ¾¶(mm)',(350,670))
-            self.input25=wx.TextCtrl(self.panel,-1,'',(500,670))
-            self.text25=wx.StaticText(self.panel,-1,'»»ÈÈ¹Ü±Úºñ(mm)',(350,710))
-            self.input25=wx.TextCtrl(self.panel,-1,'',(500,710))
+        ########åˆ›å»ºå·¦ç®¡ç®±è®¡ç®—ç•Œé¢
+        self.text31=wx.StaticText(self.panel,-1,'ç®¡ç¨‹è®¾è®¡å‹åŠ›(MPa)',(350,70))
+        self.input31=wx.TextCtrl(self.panel,-1,'',(500,70))
+        self.text32=wx.StaticText(self.panel,-1,'ç®¡ç¨‹è®¾è®¡æ¸©åº¦(â„ƒ)',(350,110))
+        self.input32=wx.TextCtrl(self.panel,-1,'',(500,110))
+        self.text33=wx.StaticText(self.panel,-1,'ç„Šæ¥ç³»æ•°',(350,150))
+        self.input33=wx.TextCtrl(self.panel,-1,'',(500,150))
+        self.text34=wx.StaticText(self.panel,-1,'ç®¡ä¾§è…èš€ä½™é‡(mm)',(350,190))
+        self.input34=wx.TextCtrl(self.panel,-1,'',(500,190))        
+        self.text35=wx.StaticText(self.panel,-1,'ç®¡ç®±ç­’ä½“ææ–™',(350,230))
+        self.input35=wx.Choice(self.panel,-1,(500,230),choices=mat1)
+        self.text36=wx.StaticText(self.panel,-1,'ç®¡ç®±ç­’ä½“å†…å¾„(mm)',(350,270))
+        self.input36=wx.TextCtrl(self.panel,-1,'',(500,270))
+        self.text37=wx.StaticText(self.panel,-1,'ç®¡ç®±ç­’ä½“å£åš(mm)',(350,310))
+        self.input37=wx.TextCtrl(self.panel,-1,'',(500,310))
+        self.text38=wx.StaticText(self.panel,-1,'å·¦ç®¡ç®±ç­’ä½“é•¿åº¦(mm)',(350,350))
+        self.input38=wx.TextCtrl(self.panel,-1,'',(500,350))
+        self.text39=wx.StaticText(self.panel,-1,'å³ç®¡ç®±ç­’ä½“é•¿åº¦(mm)',(350,390))
+        self.input39=wx.TextCtrl(self.panel,-1,'',(500,390))        
+        self.button2=wx.Button(self.panel,-1,'è®¡ç®—ç­’ä½“å¼ºåº¦(å†…å‹)',(350,430))        
+        #åˆ›å»ºç»“æŸ
+
+
+        ################å¼€å§‹åˆ›å»ºç®¡æ¿è®¡ç®—ç•Œé¢
+        self.singlebox2=wx.RadioBox(self.panel,-1,'é’¢åˆ¶ç®¡æ¿å¼ºåº¦è®¡ç®—',(700,0),choices=type2)
+        if self.singlebox2.GetSelection()==0:
+            self.text10=wx.StaticText(self.panel,-1,'è®¾è®¡å‹åŠ›(MPa)',(700,70))
+            self.input10=wx.TextCtrl(self.panel,-1,'',(850,70))
+            self.text11=wx.StaticText(self.panel,-1,'ç®¡æ¿å¤–å¾„(mm)',(700,110))
+            self.input11=wx.TextCtrl(self.panel,-1,'',(850,110))
+            self.text12=wx.StaticText(self.panel,-1,'ç®¡æ¿åä¹‰åšåº¦(mm)',(700,150))
+            self.input12=wx.TextCtrl(self.panel,-1,'',(850,150))
+            self.text13=wx.StaticText(self.panel,-1,'ç®¡æ¿ææ–™',(700,190))
+            self.input13=wx.Choice(self.panel,-1,(850,190),choices=mat2)            
+            self.text14=wx.StaticText(self.panel,-1,'ç®¡å­”ç›´å¾„(mm)',(700,230))
+            self.input14=wx.TextCtrl(self.panel,-1,'',(850,230))
+            self.text15=wx.StaticText(self.panel,-1,'å£³ä¾§è…èš€ä½™é‡(mm)',(700,270))
+            self.input15=wx.TextCtrl(self.panel,-1,'',(850,270))                    
+            self.text16=wx.StaticText(self.panel,-1,'ç®¡ä¾§è…èš€ä½™é‡(mm)',(700,310))
+            self.input16=wx.TextCtrl(self.panel,-1,'',(850,310))
+            self.text17=wx.StaticText(self.panel,-1,'å£³ä¾§ç»“æ„å¼€æ§½æ·±åº¦(mm)',(700,350))
+            self.input17=wx.TextCtrl(self.panel,-1,'',(850,350))
+            self.text18=wx.StaticText(self.panel,-1,'ç®¡ä¾§åˆ†ç¨‹éš”æ¿æ§½æ·±åº¦(mm)',(700,390))
+            self.input18=wx.TextCtrl(self.panel,-1,'',(850,390))
+            self.text19=wx.StaticText(self.panel,-1,'ç®¡æ¿æœ€å°åšåº¦(mm)',(700,430))
+            self.input19=wx.TextCtrl(self.panel,-1,'',(850,430))
+            self.text20=wx.StaticText(self.panel,-1,'ç®¡æ¿ä¸æ¢çƒ­ç®¡è¿æ¥å½¢å¼',(700,470))
+            self.input20=wx.Choice(self.panel,-1,(850,470),choices=type3)            
+            self.text21=wx.StaticText(self.panel,-1,'ä¸€æ ¹ç®¡å­æ”¯æ’‘æˆªé¢ç§¯(mm2)',(700,510))
+            self.input21=wx.TextCtrl(self.panel,-1,'',(850,510))
+            self.text22=wx.StaticText(self.panel,-1,'ç³»æ•°C(è¡¨20)',(700,550))
+            self.input22=wx.TextCtrl(self.panel,-1,'',(850,550))
+            self.text23=wx.StaticText(self.panel,-1,'æœ‰æ•ˆç„Šæ¥é«˜åº¦(mm)',(700,590))
+            self.input23=wx.TextCtrl(self.panel,-1,'',(850,590))
+            self.text2=wx.StaticText(self.panel,-1,'æ¢çƒ­ç®¡ææ–™',(700,630))
+            self.input24=wx.Choice(self.panel,-1,(850,630),choices=mat3) 
+            self.text25=wx.StaticText(self.panel,-1,'æ¢çƒ­ç®¡é•¿åº¦(mm)',(700,670))
+            self.input25=wx.TextCtrl(self.panel,-1,'',(850,670))
+            self.text25=wx.StaticText(self.panel,-1,'æ¢çƒ­ç®¡å¤–å¾„(mm)',(700,710))
+            self.input25=wx.TextCtrl(self.panel,-1,'',(850,710))
+            self.text25=wx.StaticText(self.panel,-1,'æ¢çƒ­ç®¡å£åš(mm)',(700,750))
+            self.input25=wx.TextCtrl(self.panel,-1,'',(850,750))
+            self.text26=wx.StaticText(self.panel,-1,'æ”¯æ’‘é—´è·(mm)',(700,790))
+            self.input26=wx.TextCtrl(self.panel,-1,'',(850,790))
+            self.text27=wx.StaticText(self.panel,-1,'è®¾è®¡æ¸©åº¦(â„ƒ)',(700,830))
+            self.input27=wx.TextCtrl(self.panel,-1,'',(850,830))
+            self.button3=wx.Button(self.panel,-1,'è®¡ç®—ç®¡æ¿å¼ºåº¦',(700,870))
+            #åˆ›å»ºç»“æŸ
+
+            self.Bind(wx.EVT_BUTTON,self.fun2,self.button3)##ç®¡æ¿å¼ºåº¦è®¡ç®—çš„äº‹ä»¶é©±åŠ¨
             
 
 
 
     def fun1(self,event):
         test=self.input5.GetStringSelection().encode('cp936')
-        Pc=float(self.input1.GetValue())#¿ÇÌåÉè¼ÆÑ¹Á¦
-        tem=float(self.input2.GetValue())#¿ÇÌåÉè¼ÆÎÂ¶È
-        fi=float(self.input3.GetValue())#º¸½ÓÏµÊı
-        C2=float(self.input4.GetValue())#¸¯Ê´ÓàÁ¿
-        t=float(self.input7.GetValue())#Í²Ìå±Úºñ
-        cigama=fun.fun2(test,t,tem)#Í²ÌåµÄ²ÄÁÏĞíÓÃÓ¦Á¦
+        Pc=float(self.input1.GetValue())#å£³ä½“è®¾è®¡å‹åŠ›
+        tem=float(self.input2.GetValue())#å£³ä½“è®¾è®¡æ¸©åº¦
+        fi=float(self.input3.GetValue())#ç„Šæ¥ç³»æ•°
+        C2=float(self.input4.GetValue())#è…èš€ä½™é‡
+        t=float(self.input7.GetValue())#ç­’ä½“å£åš
+        cigama=fun.fun2(test,t,tem)#ç­’ä½“çš„ææ–™è®¸ç”¨åº”åŠ›
         if test=='Q245R':
-            Di=float(self.input6.GetValue())#Í²ÌåÄÚ¾¶
+            Di=float(self.input6.GetValue())#ç­’ä½“å†…å¾„
             C=0.3+C2
         else:
-            D=float(self.input6.GetValue())#Í²ÌåÍâ¾¶
-            S=float(self.input7.GetValue())#Í²Ìå±Úºñ
-            C1=fun.fun3(D,S)#Í²Ìå²ÄÁÏÏÂÆ«²î
+            D=float(self.input6.GetValue())#ç­’ä½“å¤–å¾„
+            S=float(self.input7.GetValue())#ç­’ä½“å£åš
+            C1=fun.fun3(D,S)#ç­’ä½“ææ–™ä¸‹åå·®
             C=C1+C2
-            Di=D-2*t#µ±²ÄÁÏÎª¸Ö¹Ü20Ê±Í²ÌåµÄÄÚ¾¶
-        deltae=t-C#Í²ÌåµÄÓĞĞ§ºñ¶È
-        result1=fun.fun1(Pc,Di,fi,cigama,deltae)#Í²Ìå¼ÆËãÇ¿¶È»Ø·µÖµ
+            Di=D-2*t#å½“ææ–™ä¸ºé’¢ç®¡20æ—¶ç­’ä½“çš„å†…å¾„
+        deltae=t-C#ç­’ä½“çš„æœ‰æ•ˆåšåº¦
+        result1=fun.fun1(Pc,Di,fi,cigama,deltae)#ç­’ä½“è®¡ç®—å¼ºåº¦å›è¿”å€¼
         if result1==1:
-            wx.MessageBox('Í²ÌåÇ¿¶ÈÂú×ã!','ĞÅÏ¢',style=wx.OK)
+            wx.MessageBox('ç­’ä½“å¼ºåº¦æ»¡è¶³!','ä¿¡æ¯',style=wx.OK)
         elif result1==0:
-            wx.MessageBox('Í²ÌåÇ¿¶È²»Âú×ã!','¾¯¸æ',style=wx.OK)
+            wx.MessageBox('ç­’ä½“å¼ºåº¦ä¸æ»¡è¶³!','è­¦å‘Š',style=wx.OK)
         elif result1==2:
-            wx.MessageBox('¹«Ê½²»ÊÊÓÃ','¾¯¸æ',style=wx.OK)
+            wx.MessageBox('å…¬å¼ä¸é€‚ç”¨','è­¦å‘Š',style=wx.OK)
 
 
+    def fun2(self,event):#ç®¡æ¿çš„è®¡ç®—
+        d=self.input14.GetValue()#ç®¡å­”ç›´å¾„
+        delta1=fun.fun11(d)#æœ‰ç®¡æŸéƒ¨åˆ†çš„ç®¡æ¿è®¡ç®—åšåº¦
+        deltan=self.input12.GetValue()#ç®¡æ¿çš„åä¹‰åšåº¦
+        tem=self.input27.GetValue()#è®¾è®¡æ¸©åº¦
+        if self.input20.GetSelection()==0:
+            S=fun.fun12(deltan,d)#æœ€å°ç®¡å­”ä¸­å¿ƒè·
+            Pc=self.input10.GetValue()#è®¾è®¡å‹åŠ›
+            F=self.input21.GetValue()#ç®¡å­æ‰€å›´æˆé¢ç§¯
+            W=fun.fun18(Pc,F)#ä¸€æ ¹ç®¡å­æ‰€æ”¯æ’‘çš„è½½è·
+            d0=self.input25.GetValue()#æ¢çƒ­ç®¡å¤–å¾„
+            cigamat1=fun.fun13(W,deltan,d0)#èƒ€æ¥æ—¶é’¢åˆ¶ç®¡æ¿ä¸ç®¡å­çš„æ¥è§¦åº”åŠ›
+            t=self.input25.GetValue()#ç®¡å­å£åš
+            cigamat2=fun.fun19(W,d0,t)#ç®¡å­çš„åº”åŠ›å€¼
+        l=self.input26.GetValue()#æ”¯æ’‘é—´è·
+        C=self.input22.GetValue()#ç³»æ•°
+        material=self.input13.GetStringSelection()#ç®¡æ¿ææ–™
+        cigamat=fun.fun2(material,deltan,tem)#ç®¡æ¿ææ–™çš„è®¸ç”¨åº”åŠ›
+        delta2=fun.fun16(l,Pc,C,cigamat)#ç®¡æ¿æ— ç®¡æŸéƒ¨åˆ†çš„è®¡ç®—åšåº¦
+        C2=self.input15.GetValue()#å£³å¾è…èš€ä½™é‡
+        p=fun.fun17(C,cigamat,deltan,C2,l)#ç®¡æ¿è®¸ç”¨åº”åŠ›æ ¡æ ¸
+        
 
-    def renew1(self,event):#µ±Ñ¡Ôñ²»Í¬µÄ²ÄÁÏÊ±£¬¸üĞÂ¶ÔÓ¦µÄ±êÇ©
-        if self.input5.GetStringSelection().encode('cp936')=='¸Ö¹Ü20':
-            self.text6.SetLabel('Í²ÌåÍâ¾¶(mm)')
+
+    def renew1(self,event):#å½“é€‰æ‹©ä¸åŒçš„ææ–™æ—¶ï¼Œæ›´æ–°å¯¹åº”çš„æ ‡ç­¾
+        if self.input5.GetStringSelection().encode('cp936')=='é’¢ç®¡20':
+            self.text6.SetLabel('ç­’ä½“å¤–å¾„(mm)')
         else:
-            self.text6.SetLabel('Í²ÌåÄÚ¾¶(mm)')
+            self.text6.SetLabel('ç­’ä½“å†…å¾„(mm)')
 
 
         

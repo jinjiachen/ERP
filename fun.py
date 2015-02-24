@@ -19,7 +19,7 @@ def fun1(Pc,Di,fi,cigama,deltae):###此公式用来计算筒体强度
     else:
         return(2)#公式不适用返回0
 
-def fun2(a1,a2,a3):##此函数用来计算许用应力
+def fun2(a1,a2,a3):##此函数用来计算许用应力,按照标准NB/T47012-2010
     if a1=='Q235B':#a1为材料 a2为厚度 a3为温度
         if a2>=3 and a2<16:
             if a3<150:
@@ -80,6 +80,26 @@ def fun2(a1,a2,a3):##此函数用来计算许用应力
                 ans=(126-132)/50*(a3-100)+132
             elif a3>150 and a3<=200:
                 ans=(118-126)/50*(a3-150)+126
+    elif a1=='Q345R':
+        if a2>=3 and a2<16:
+            if a3<=150:
+                ans=170
+            elif a3>150 and a3<200:
+                ans=170+(165-170)/50*(a3-150)
+        elif a2>=16 and a2<36:
+            if a3<=100:
+                ans=167
+            elif a3>100 and a3<=150:
+                ans=167+(165-167)/50*(a3-100)
+            elif a3>150 and a3<=200:
+                ans=165+(163-165)/50*(a3-150)
+        elif a2>=36 and a2<60:
+            if a3<=100:
+                ans=163
+            elif a3>100 and a3<=150:
+                ans=163+(156-163)/50*(a3-100)
+            elif a3>150 and a3<=200:
+                ans=156+(144-156)/50*(a3-150)
     return(ans)
 
 def fun3(D,S):##计算材料下偏差
@@ -152,3 +172,62 @@ def fun10(do,deltant,Pc,Di,fi,cigama,mt1,mt2,t,tem,ou1,in1,deltae,cigama1,bra):#
     
     
         
+def fun11(d):###钢制管板的计算厚度
+    d=float(d)#管孔直径
+    delta=8+d/12
+    return(delta)
+
+def fun12(deltan,d):###胀接时，钢制管板管孔最小中心距
+    deltan=float(deltan)#管板名义厚度
+    d=float(d)#管孔直径
+    s=(1+2.8/deltan)*d
+    return(s)
+
+def fun13(W,deltan,d0):###胀接时，管子与管板的接触应力
+    W=float(W)#一根管子所支撑的载荷
+    d0=float(d0)#管子外径
+    deltan=float(deltan)#管板名义厚度
+    cigamat=W/(3.14*d0*deltan)
+    return(cigamat)
+
+def fun14(W,d0,l):###焊接时，管子与管板接触面的剪切应力
+    W=float(W)#一根管子所支撑的载荷
+    d0=float(d0)#管子外径
+    l=float(l)#管子与管板的有效焊接高度
+    cigamat=W/(3.14*d0*l)
+    return(cigamat)
+
+def fun15(W,A):###作用于管子上的应力值
+    W=float(W)#一根管子所支撑的载荷
+    A=float(A)#管子的截面积
+    cigamat=1.1*W/A
+    return(cigamat)
+
+def fun16(l,Pc,C,cigamat):###管板无管束部分的计算厚度
+    l=float(l)#支撑的间距
+    Pc=float(Pc)#设计压力
+    C=float(C)#表20的系数
+    delta=l*math.sqrt(Pc/C/cigamat)
+    return(delta)
+
+def fun17(C,cigamat,deltan,C2,l):###管板无管束部分许用应力校核
+    C=float(C)#表20的系数
+    deltan=float(deltan)#管板名义厚度
+    C2=float(C2)##腐蚀余量
+    l=float(l)#支撑的间距
+    p=C*cigamat*(deltan-C2)**2/l**2
+    return(p)
+
+def fun18(Pc,F):###计算一根管子所支撑的载荷
+    Pc=float(Pc)#设计压力
+    F=float(F)#所围成的面积
+    W=Pc*F
+    return(W)
+
+def fun19(W,d0,t):###管子的应力值
+    d0=float(d0)#管子外径
+    t=float(t)#管子壁厚
+    di=d0-2*t
+    A=math.pi/4*(d0**2-di**2)
+    cigamat=1.1*W/A
+    return(cigama)
